@@ -1,4 +1,42 @@
-baseURL = 'http://example.org/'
+baseURL = 'https://londonco2storage.github.io/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'The London Register of Subsurface CO2 Storage'
 theme = 'mytheme'
+
+[menus]
+
+[[menus.main]]
+name = 'Home'
+pageRef = '/'
+weight = 10
+
+[[menus.main]]
+name = 'Project'
+pageRef = '/project'
+weight = 20
+
+[[menus.main]]
+name = 'Team and Partners'
+pageRef = '/team'
+weight = 30
+
+[[menus.main]]
+name = 'News'
+title = 'News'
+pageRef = '/news'
+weight = 40
+
+[[menus.main]]
+name = 'Event'
+pageRef = '/event'
+weight = 50
+
+[[menus.main]]
+name = 'Publication'
+pageRef = '/publication'
+weight = 60
+
+[[menus.main]]
+name = 'Contact Us'
+pageRef = '/contact'
+weight = 70
