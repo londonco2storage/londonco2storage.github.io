@@ -1,48 +1,50 @@
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    This is a preview of the website.
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+{{/* <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  This is a preview of the website.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div> */}}
+
+{{- $page := .Page }}
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        {{/* <a class="navbar-brand" href="#">Navbar</a> */}}
-        <img src="/images/header_logo_imperial.png" style="max-height:40px" />
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Project
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Project 1</a></li>
-                        <li><a class="dropdown-item" href="#">Project 2</a></li>
-                        <li><a class="dropdown-item" href="#">Project 3</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Team</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">News</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Event</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Publications</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Contact Us</a>
-                </li>
-            </ul>
-            <img src="/images/header_logo_rae.png" style="max-height:40px" />
-        </div>
+  <div class="container-fluid">
+    {{/* <a class="navbar-brand" href="#">Navbar</a> */}}
+    <img src="/images/header_logo_imperial.png" style="max-height:40px" />
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    {{- with index site.Menus "main" }}
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {{- range . }}
+        {{- $attrs := dict "href" .URL }}
+        {{- if $page.IsMenuCurrent .Menu . }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link menu-active active" "aria-current" "page") }}
+        {{- else if $page.HasMenuCurrent .Menu .}}
+        {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+        {{- else }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link" "aria-current" "true") }}
+        {{- end }}
+        {{- $name := .Name }}
+        {{- with .Identifier }}
+        {{- with T . }}
+        {{- $name = . }}
+        {{- end }}
+        {{- end }}
+        <li class="nav-item">
+          <a {{- range $k, $v :=$attrs }} {{- with $v }} {{- printf " %s=%q" $k $v | safeHTMLAttr }} {{- end }} {{- end
+            -}}>{{ $name }}</a>
+          {{/* {{- with .Children }}
+          <ul>
+            {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
+          </ul>
+          {{- end }} */}}
+        </li>
+        {{- end }}
+      </ul>
+      <img src="/images/header_logo_rae.png" style="max-height:40px" />
     </div>
+    {{- end }}
+  </div>
 </nav>

@@ -1,0 +1,19 @@
+{{- define "main" }}
+
+<div class="container mt-5">
+
+    {{ $lastIndex := sub (len .Site.Data.publication.publication) 1 }}
+    {{ range $index, $pubication := .Site.Data.publication.publication }}
+    <div class="list-item">
+        {{ range $author := .author }}
+        {{.}}
+        {{ end }}
+        {{ .date }} <b style="color: rgb(46, 105, 150);">{{ .title }}</b> {{.publisher}}
+        <a class="link-secondary link-opacity-25-hover" href="{{ .DOI }}" target="_blank">{{.DOI}}</a>
+    </div>
+    {{ if lt $index $lastIndex }} <hr> {{ end }}
+    {{ end }}
+
+</div>
+
+{{- end }}

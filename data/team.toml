@@ -1,0 +1,34 @@
+[[member]]
+name = "Prof. Samuel Krevor"
+avatar="team-krevor.jpg"
+role = "Director & Principal Investigator"
+position = [
+    "Professor of Subsurface Carbon Storage, Department of Earth Science & Engineering, Imperial College London, UK" ,
+    "Senior Research Fellowships, Royal Academy of Engineering, UK"
+]
+
+[[member]]
+name = "Xiaowei Gao"
+avatar="team-gao.jpg"
+role = "Executive Director"
+position = [
+    "Postdoc Researcher for Global Scaling Up of CCUS, Department of Earth Science & Engineering, Imperial College London, UK",
+]
+
+[[member]]
+name = "Dr Anjanette Harry"
+avatar="team-harry.jpg"
+role = "Project Manager"
+position = [
+    "Department of Earth Science & Engineering, Imperial College London, UK",
+]
+email = "a.harry1@imperial.ac.uk"
+
+[[member]]
+name = "Jinshuai Ma"
+avatar="team-ma.jpg"
+role = "Technical Support"
+position = [
+    "Research Engineer, Data Science Institute, London School of Economics and Political Science, UK" ,
+]
+email = "j.ma23@lse.ac.uk"

@@ -1,0 +1,37 @@
+{{- define "main" }}
+
+<div class="container mt-5">
+
+    <h2>Team</h2>
+    {{ $lastIndex := sub (len .Site.Data.team.member) 1 }}
+    {{ range $index, $member := .Site.Data.team.member }}
+    <div class="row mt-1 mb-1  d-flex justify-content-center align-items-center list-item">
+        <div class="col-lg-2 text-center">
+            <div class="team-avatar rounded-3" style="background-image: url('/images/{{.avatar}}');">
+            </div>
+        </div>
+        <div class="col-lg-10">
+            <div><b>{{.name}}</b> | {{.role}}</div>
+            {{ range $position := .position }}
+            <div>
+                {{.}}
+            </div>
+            {{end}}
+            <div>{{.email}}</div>
+        </div>
+    </div>
+    {{ if lt $index $lastIndex }} <hr> {{ end }}
+    {{ end }}
+
+    <hr>
+    <h2 class="mt-5">Partners</h2>
+    <div class="mt-5">
+        <h5>
+            We are proud to collaborate with leading international organizations, top universities, and key industry stakeholders on the London CO₂ Storage Register initiative. Together, we are driving innovation and sustainability in carbon storage for a greener future.
+        </p>
+    </div>
+    <div class="mt-5 mb-5">
+        <img src="/images/team_partner_map.png" class="img-fluid" alt="Partner Map">
+    </div>
+</div>
+{{- end }}
