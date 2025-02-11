@@ -1,14 +1,9 @@
-{{/* <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  This is a preview of the website.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div> */}}
-
 {{- $page := .Page }}
-
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    {{/* <a class="navbar-brand" href="#">Navbar</a> */}}
-    <img src="/images/header_logo_imperial.png" style="max-height:40px" />
+    <a class="navbar-brand" href="/">
+      <img src="/images/header_logo_imperial.png" style="max-height:40px" />
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -18,11 +13,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         {{- range . }}
-        {{- $attrs := dict "href" .URL }}
+        {{/*  {{- $attrs := dict "href" .URL }}  */}}
+        {{- $attrs := dict }}
         {{- if $page.IsMenuCurrent .Menu . }}
-        {{- $attrs = merge $attrs (dict "class" "nav-link menu-active active" "aria-current" "page") }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link menu-active" "aria-current" "page") }}
         {{- else if $page.HasMenuCurrent .Menu .}}
-        {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link dropdown-toggle ancestor menu-active" "aria-current" "true") }}
+        {{- else if .HasChildren }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link dropdown-toggle" "aria-current" "true") }}
         {{- else }}
         {{- $attrs = merge $attrs (dict "class" "nav-link" "aria-current" "true") }}
         {{- end }}
@@ -32,18 +30,50 @@
         {{- $name = . }}
         {{- end }}
         {{- end }}
+        {{ if .HasChildren }}
+        <li class="nav-item dropdown">
+          <a {{- range $k, $v :=$attrs }} {{- with $v }} {{- printf " %s=%q" $k $v | safeHTMLAttr }} {{- end }} {{- end
+            -}} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ $name }}
+          </a>
+          <ul class="dropdown-menu">
+            {{- with .Children }}
+            {{range .}}
+            {{- $attrs := dict }}
+            {{- if $page.IsMenuCurrent .Menu . }}
+            {{- $attrs = merge $attrs (dict "class" "nav-link menu-active" "aria-current" "page") }}
+            {{- else if $page.HasMenuCurrent .Menu .}}
+            {{- $attrs = merge $attrs (dict "class" "ancestor" "aria-current" "true") }}
+            {{- else }}
+            {{- $attrs = merge $attrs (dict "class" "nav-link" "aria-current" "true") }}
+            {{- end }}
+            {{- $name := .Name }}
+            {{- with .Identifier }}
+            {{- with T . }}
+            {{- $name = . }}
+            {{- end }}
+            {{- end }}
+            {{- $attrs = merge $attrs (dict "href" .URL) }}
+            <li class="dropdown-item">
+              <a {{- range $k, $v :=$attrs }} {{- with $v }} {{- printf " %s=%q" $k $v | safeHTMLAttr }} {{- end }} {{- end
+                -}}>{{ $name }}</a>
+            </li>
+            {{end}}
+            {{- end }}
+          </ul>
+        </li>
+        {{ else }}
+        {{- $attrs = merge $attrs (dict "href" .URL) }}
         <li class="nav-item">
           <a {{- range $k, $v :=$attrs }} {{- with $v }} {{- printf " %s=%q" $k $v | safeHTMLAttr }} {{- end }} {{- end
             -}}>{{ $name }}</a>
-          {{/* {{- with .Children }}
-          <ul>
-            {{- partial "inline/menu/walk.html" (dict "page" $page "menuEntries" .) }}
-          </ul>
-          {{- end }} */}}
         </li>
+        {{ end }}
         {{- end }}
       </ul>
-      <img src="/images/header_logo_rae.png" style="max-height:40px" />
+      <a class="navbar-brand" href="https://raeng.org.uk/" target="_blank">
+        <img src="/images/header_logo_rae.png" style="max-height:40px" />
+      </a>
     </div>
     {{- end }}
   </div>
