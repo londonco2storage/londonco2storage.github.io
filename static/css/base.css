@@ -20,6 +20,10 @@
     width: 100%;
 }
 
+.menu-active {
+    font-weight: 500;
+}
+
 .list-item {
     transition: background-color 0.4s ease-in-out;
     padding: 24px 20px;
@@ -44,6 +48,14 @@
     max-width:120px;
 }
 
-.menu-active {
-    font-weight: 500;
+.team-icon {
+    cursor: pointer;
+    text-decoration:none;
+    margin-right: 8px;
+    color:rgb(162, 163, 176);
+    transition: color 0.3s ease-in-out;
+}
+
+.team-icon:hover {
+    color: rgb(71, 165, 199);
 }

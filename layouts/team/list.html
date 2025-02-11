@@ -11,24 +11,37 @@
             </div>
         </div>
         <div class="col-lg-10">
-            <div><b>{{.name}}</b> | {{.role}}</div>
+            <div><b>{{.name}}</b> | <span style="color: rgb(122, 122, 122);">{{.role}}</span></div>
             {{ range $position := .position }}
             <div>
                 {{.}}
             </div>
             {{end}}
-            <div>{{.email}}</div>
+            <div class="mt-2">
+                {{ range $social := .social }}
+                {{ $pre := substr .icon_pack 0 2}}
+                {{ $class := printf "%s %s-%s %s-lg" .icon_pack $pre .icon $pre}}
+                {{ $href := "#"}}
+                {{ if eq .id "email" }}
+                {{ $href = printf "mailto:%s" .link }}
+                {{ else}}
+                {{ $href = .link }}
+                {{ end }}
+                <a class="team-icon" href="{{$href}}" target="_blank">
+                    <i class="{{$class}}"></i>
+                </a>
+                {{end}}
+            </div>
         </div>
     </div>
-    {{ if lt $index $lastIndex }} <hr> {{ end }}
+    {{ if lt $index $lastIndex }}
+    <hr> {{ end }}
     {{ end }}
 
     <hr>
     <h2 class="mt-5">Partners</h2>
     <div class="mt-5">
-        <h5>
-            We are proud to collaborate with leading international organizations, top universities, and key industry stakeholders on the London CO₂ Storage Register initiative. Together, we are driving innovation and sustainability in carbon storage for a greener future.
-        </p>
+        <h5>{{.Site.Data.team.partner.text}}</h5>
     </div>
     <div class="mt-5 mb-5">
         <img src="/images/team_partner_map.png" class="img-fluid" alt="Partner Map">

@@ -1,34 +1,54 @@
 [[member]]
 name = "Prof. Samuel Krevor"
-avatar="team-krevor.jpg"
+avatar = "team-krevor.jpg"
 role = "Director & Principal Investigator"
 position = [
-    "Professor of Subsurface Carbon Storage, Department of Earth Science & Engineering, Imperial College London, UK" ,
-    "Senior Research Fellowships, Royal Academy of Engineering, UK"
+    "Professor of Subsurface Carbon Storage, Department of Earth Science & Engineering, Imperial College London, UK",
+    "Senior Research Fellowships, Royal Academy of Engineering, UK",
+]
+social = [
+    { id = "google-scholar", icon = "google-scholar", icon_pack = "ai", link = "https://scholar.google.com/citations?user=5TGQNk4AAAAJ&hl=en" },
+    { id = "linkedin", icon = "linkedin", icon_pack = "fab", link = "https://www.linkedin.com/in/sam-krevor-9b8677147/?originalSubdomain=uk" },
+    { id = "email", icon = "envelope", icon_pack = "fa", link = "s.krevor@imperial.ac.uk" },
 ]
 
 [[member]]
 name = "Xiaowei Gao"
-avatar="team-gao.jpg"
+avatar = "team-gao.jpg"
 role = "Executive Director"
 position = [
     "Postdoc Researcher for Global Scaling Up of CCUS, Department of Earth Science & Engineering, Imperial College London, UK",
 ]
+social = [
+    { id = "google-scholar", icon = "google-scholar", icon_pack = "ai", link = "https://scholar.google.com/citations?hl=en&user=PQRJg2YAAAAJ&view_op=list_works&sortby=pubdate" },
+    { id = "linkedin", icon = "linkedin", icon_pack = "fab", link = "https://www.linkedin.com/in/xiaowei-gao-a8070b113/" },
+    { id = "email", icon = "envelope", icon_pack = "fa", link = "xg320@ic.ac.uk" },
+]
 
 [[member]]
 name = "Dr Anjanette Harry"
-avatar="team-harry.jpg"
+avatar = "team-harry.jpg"
 role = "Project Manager"
 position = [
     "Department of Earth Science & Engineering, Imperial College London, UK",
 ]
-email = "a.harry1@imperial.ac.uk"
+social = [
+    { id = "email", icon = "envelope", icon_pack = "fa", link = "a.harry1@imperial.ac.uk" },
+]
+
 
 [[member]]
 name = "Jinshuai Ma"
-avatar="team-ma.jpg"
+avatar = "team-ma.jpg"
 role = "Technical Support"
 position = [
-    "Research Engineer, Data Science Institute, London School of Economics and Political Science, UK" ,
+    "Research Engineer, Data Science Institute, London School of Economics and Political Science, UK",
 ]
-email = "j.ma23@lse.ac.uk"
+social = [
+    { id = "linkedin", icon = "linkedin", icon_pack = "fab", link = "https://www.linkedin.com/in/jinshuai-ma-b19043145/" },
+    { id = "email", icon = "envelope", icon_pack = "fa", link = "j.ma23@lse.ac.uk" },
+    { id = "github", icon = "github", icon_pack = "fab", link = "https://github.com/Mayazure" },
+]
+
+[partner]
+text = "We are proud to collaborate with leading international organizations, top universities, and key industry stakeholders on the London CO₂ Storage Register initiative. Together, we are driving innovation and sustainability in carbon storage for a greener future."
