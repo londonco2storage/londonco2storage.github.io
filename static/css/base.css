@@ -34,28 +34,40 @@
 }
 
 .team-avatar {
-    padding: 0; 
-    overflow: hidden; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;  
-    background-size: cover; 
-    background-position: start; 
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: start;
     background-repeat: no-repeat;
-    min-height:120px;
-    max-height:120px;
-    min-width:120px;
-    max-width:120px;
+    min-height: 120px;
+    max-height: 120px;
+    min-width: 120px;
+    max-width: 120px;
 }
 
 .team-icon {
     cursor: pointer;
-    text-decoration:none;
+    text-decoration: none;
     margin-right: 8px;
-    color:rgb(162, 163, 176);
+    color: rgb(162, 163, 176);
     transition: color 0.3s ease-in-out;
 }
 
 .team-icon:hover {
     color: rgb(71, 165, 199);
+}
+
+.project-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.project-table th, .project-table td {
+    border: 1px solid rgb(189, 189, 189);
+    padding: 8px;
+}
+.project-table th {
+    background-color: #ebebeb;
 }
