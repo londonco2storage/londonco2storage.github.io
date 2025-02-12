@@ -1,7 +1,6 @@
 baseURL = 'https://londonco2storage.github.io/'
 languageCode = 'en-us'
 title = 'The London Register of Subsurface CO2 Storage'
-theme = 'mytheme'
 
 [menus]
 
@@ -16,6 +15,7 @@ pageRef = '/project'
 weight = 20
 
 [[menus.main]]
+identifier = 'team'
 name = 'Team and Partners'
 pageRef = '/team'
 weight = 30
@@ -31,11 +31,13 @@ pageRef = '/event'
 weight = 50
 
 [[menus.main]]
+identifier = 'publication'
 name = 'Publication'
 pageRef = '/publication'
 weight = 60
 
 [[menus.main]]
+identifier = 'contact'
 name = 'Contact Us'
 pageRef = '/contact'
 weight = 70
