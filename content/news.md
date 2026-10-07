@@ -1,6 +1,6 @@
 ---
 title: "In the News"
-date: 2026-10-08T12:00:00Z
+date: 2026-10-07T00:00:00Z
 draft: false
 layout: single
 ---
