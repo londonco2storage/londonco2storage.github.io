@@ -4,6 +4,7 @@ avatar = "team-ma.jpg"
 role = "Provided initial development work and technical support for the website"
 position = [
     "Research Engineer, Data Science Institute, London School of Economics and Political Science, UK",
+    "PhD Student, SpaceTimeLab, University College London, UK",
 ]
 social = [
     { id = "linkedin", icon = "linkedin", icon_pack = "fab", link = "https://www.linkedin.com/in/jinshuai-ma-b19043145/" },

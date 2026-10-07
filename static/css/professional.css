@@ -600,3 +600,28 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .list-item:hover { background-color: var(--wash); }
 .stat-map { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
 .stat-map-widget { width: 220px; min-height: 110px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.04); }
+
+/* News coverage list. */
+.news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: .9rem; margin-top: 1.2rem; }
+.news-item {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: .95rem 1.15rem .9rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+.news-item:hover { box-shadow: 0 4px 14px rgba(20, 47, 64, .1); transform: translateY(-2px); color: var(--ink); }
+.news-meta { display: flex; align-items: baseline; gap: .7rem; margin-bottom: .3rem; }
+.news-outlet {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.news-date { font-size: .72rem; color: var(--muted); }
+.news-title { font-size: .95rem; font-weight: 600; line-height: 1.4; }
+.news-ext { color: var(--muted); font-size: .85rem; }

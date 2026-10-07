@@ -112,3 +112,45 @@ note = "Metric-basis fields added; source-review corrections; storage-type audit
 version = "v9"
 date = "7 Oct 2026"
 note = "Clive Sequestration Facility 2025 value added from Alberta Petrinex data."
+
+[[news]]
+outlet = "Imperial College London"
+date = "November 2025"
+title = "First complete record of global underground CO2 storage"
+url = "https://www.imperial.ac.uk/news/articles/engineering/earth-science/2025/first-complete-record-global-underground-co2/"
+
+[[news]]
+outlet = "IEAGHG"
+date = "November 2025"
+title = "383 million tonnes CO2 permanently stored underground"
+url = "https://ieaghg.org/news/383-million-tonnes-co2-permanently-stored-underground/"
+
+[[news]]
+outlet = "Norwegian SciTech News"
+date = "November 2025"
+title = "First complete record of global underground CO2 storage"
+url = "https://norwegianscitechnews.com/2025/11/first-complete-record-of-global-underground-co%E2%82%82-storage/"
+
+[[news]]
+outlet = "Carbon Herald"
+date = "November 2025"
+title = "London Register of Subsurface CO2 Storage just launched"
+url = "https://carbonherald.com/london-register-of-subsurface-co2-storage-just-launched/"
+
+[[news]]
+outlet = "Protea"
+date = "2025"
+title = "Global underground CO2 storage data offers hope amid rising emissions"
+url = "https://www.protea.ltd.uk/global-underground-co2-storage-data-offers-hope-amid-rising-emissions"
+
+[[news]]
+outlet = "Global CCS Institute"
+date = "2026"
+title = "London Climate Action Week 2026 recap"
+url = "https://www.globalccsinstitute.com/lcaw2026recap/"
+
+[[news]]
+outlet = "E&T Magazine (IET)"
+date = "18 November 2025"
+title = "383 million tonnes of CO2 permanently stored underground since 1996, new report finds"
+url = "https://eandt.theiet.org/2025/11/18/383-million-tonnes-co2-permanently-stored-underground-1996-new-report-finds"

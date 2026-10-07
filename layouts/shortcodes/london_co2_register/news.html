@@ -1,0 +1,12 @@
+{{- $reg := site.Data.register }}
+<div class="news-list">
+    {{- range $reg.news }}
+    <a class="news-item" href="{{ .url }}" target="_blank" rel="noopener">
+        <div class="news-meta">
+            <span class="news-outlet">{{ .outlet }}</span>
+            {{- with .date }}<span class="news-date">{{ . }}</span>{{ end }}
+        </div>
+        <div class="news-title">{{ .title }} <span class="news-ext" aria-hidden="true">&#8599;</span></div>
+    </a>
+    {{- end }}
+</div>

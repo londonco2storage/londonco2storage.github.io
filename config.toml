@@ -15,6 +15,11 @@ pageRef = '/data'
 weight = 20
 
 [[menus.main]]
+name = 'News'
+pageRef = '/news'
+weight = 25
+
+[[menus.main]]
 name = 'Additional visualisation'
 pageRef = '/visualisation'
 weight = 30
