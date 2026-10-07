@@ -23,12 +23,12 @@
 </figcaption>
 
 <template id="figure_2_legend-grp-template">
-    <div class="figure_2_legend-grp">
-        <b>
-            <div class="figure_2_legend-grp-header" style="font-size: 10px; color: white"></div>
-        </b>
-        <div class="figure_2_legend-grp-content"></div>
-    </div>
+    <details class="figure_2_legend-grp">
+        <summary class="legend-country-toggle"></summary>
+        <div class="figure_2_legend-grp-content">
+            <button type="button" class="figure_2_legend-grp-header">Show only this country / reset</button>
+        </div>
+    </details>
 </template>
 
 <template id="figure_2_legend-btn-template">
@@ -293,7 +293,9 @@
         const grpHeader = grpClone.querySelector('.figure_2_legend-grp-header');
         grpHeader.id = `figure_2_legend-grp-header-${cat.id}`;
         grpHeader.style.backgroundColor = cat.color;
-        grpHeader.textContent = cat.name;
+        const countryToggle = grpClone.querySelector('.legend-country-toggle');
+        countryToggle.textContent = cat.name;
+        countryToggle.style.setProperty('--country-color', cat.color);
         grpHeader.onclick = (e) => {
             onlyShowGroup(cat.id, cat.name);
             makeChart()
