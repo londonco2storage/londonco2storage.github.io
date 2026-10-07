@@ -122,13 +122,13 @@ logo = "images/news/globalccsinstitute.png"
 
 [[news]]
 outlet = "E&T Magazine (IET)"
-date = "18 November 2025"
+date = "November 2025"
 title = "383 million tonnes of CO2 permanently stored underground since 1996, new report finds"
 url = "https://eandt.theiet.org/2025/11/18/383-million-tonnes-co2-permanently-stored-underground-1996-new-report-finds"
 
 [[news]]
 outlet = "The Guardian"
-date = "17 November 2025"
+date = "November 2025"
 title = "COP30 live blog - coverage of the Register's first complete global storage record"
 url = "https://www.theguardian.com/environment/live/2025/nov/17/cop30-belem-brazil-global-warming-latest-news-updates?filterKeyEvents=false&page=with%3Ablock-691b2ab48f08c51b9dbdeebd"
 
@@ -158,6 +158,6 @@ url = "https://carbonherald.com/london-register-of-subsurface-co2-storage-just-l
 
 [[news]]
 outlet = "Protea"
-date = "2025"
+date = "November 2025"
 title = "Global underground CO2 storage data offers hope amid rising emissions"
 url = "https://www.protea.ltd.uk/global-underground-co2-storage-data-offers-hope-amid-rising-emissions"
