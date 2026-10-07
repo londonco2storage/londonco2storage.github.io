@@ -1,0 +1,45 @@
+{{- $reg := site.Data.register }}
+
+<div class="downloads-section">
+    <h2 class="downloads-heading">Reports</h2>
+
+    <div class="downloads-row">
+        {{- range $year := slice "2025" "2026" }}
+        <div class="downloads-group">
+            <h3 class="downloads-year">{{ $year }} edition</h3>
+            <div class="downloads-cards">
+                {{- range $reg.doc }}
+                {{- if eq .year $year }}
+                <a class="download-card" href="{{ relURL .file }}" download
+                    data-goatcounter-click="download-{{ path.Base .file }}" data-goatcounter-title="{{ .title }}">
+                    <img class="download-cover" src="{{ relURL .cover }}" alt="Cover of {{ .title }}" loading="lazy">
+                    <div class="download-card-body">
+                        <div class="download-title">{{ .title }}</div>
+                        <div class="download-hint">Download</div>
+                    </div>
+                </a>
+                {{- end }}
+                {{- end }}
+            </div>
+        </div>
+        {{- end }}
+    </div>
+
+    <h2 class="downloads-heading">Database</h2>
+    <p class="downloads-db">
+        The full Register can be downloaded in database form from
+        <a href="{{ $reg.meta.zenodo }}" target="_blank" rel="noopener">{{ $reg.meta.zenodo }}</a>.
+        The current data release is <strong>{{ $reg.meta.release }}</strong> ({{ $reg.meta.updated }}).
+    </p>
+
+    <h2 class="downloads-heading">How to cite</h2>
+    <p class="downloads-cite">{{ $reg.meta.citation }}</p>
+    <details class="bibtex-box">
+        <summary>BibTeX</summary>
+        <pre id="bibtex-text">{{ $reg.meta.bibtex }}</pre>
+        <button type="button" class="bibtex-copy"
+            onclick="navigator.clipboard && navigator.clipboard.writeText(document.getElementById('bibtex-text').textContent).then(() => { this.textContent = 'Copied'; })">Copy
+            BibTeX</button>
+    </details>
+
+</div>

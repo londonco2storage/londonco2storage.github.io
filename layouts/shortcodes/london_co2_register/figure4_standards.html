@@ -1,0 +1,91 @@
+{{- $reg := site.Data.register }}
+<div class="ichart-panel">
+    <div class="ichart-title">Figure 4 &mdash; Reporting references cited in the Register</div>
+    <div class="ichart-sub">Diamonds mark publication, edition and effective dates; shaded bands show the years cited by
+        Register observations. Hover a row for Register coverage statistics; click a category above to view it alone &middot; data release {{ $reg.meta.release }}</div>
+    <div id="figure4-tooltip" class="ichart-tooltip"></div>
+    <svg id="figure4-svg" viewBox="0 0 1100 600" preserveAspectRatio="xMidYMid meet" role="img"
+        aria-label="Timeline of reporting references cited in the Register"></svg>
+</div>
+<script type="module">
+const tl = {"groups": [{"name": "Regulatory & exchange reporting", "color": "#2A5682"}, {"name": "Voluntary disclosure", "color": "#C14A4A"}, {"name": "National-inventory methodology", "color": "#2E7D64"}, {"name": "Management system & certification", "color": "#8A5CA8"}], "rows": [{"name": "EPA GHGRP Subpart RR", "group": "Regulatory & exchange reporting", "color": "#2A5682", "miles": [[2010, "Final rule (75 FR 75060)", 1], [2011, "First reporting year", -1]], "band": [2013, 2024], "stats": {"projects": 23, "observations": 86, "countries": 1, "mt": 83.1}}, {"name": "NGER (Australia)", "group": "Regulatory & exchange reporting", "color": "#2A5682", "miles": [[2007, "NGER Act", 1], [2008, "First reporting year", -1]], "band": [2019, 2024], "stats": {"projects": 1, "observations": 9, "countries": 1, "mt": 11.2}}, {"name": "HKEX ESG Guide / Code", "group": "Regulatory & exchange reporting", "color": "#2A5682", "miles": [[2012, "Guide (App 27)", 1], [2016, "Comply-or-explain", -1], [2017, "Environmental KPIs", 1], [2025, "Code (App C2)", 1]], "band": [2007, 2025], "stats": {"projects": 2, "observations": 12, "countries": 1, "mt": 5.6}}, {"name": "GRI", "group": "Voluntary disclosure", "color": "#C14A4A", "miles": [[2000, "G1", 1], [2002, "G2", -1], [2006, "G3", 1], [2013, "G4", 1], [2016, "GRI Standards (eff. 2018)", -1], [2021, "GRI 1-3 & 11 (eff. 2023)", 1], [2025, "GRI 102/103 (eff. 2027)", -1]], "band": [2007, 2025], "stats": {"projects": 5, "observations": 39, "countries": 4, "mt": 64.7}}, {"name": "Ipieca/API/IOGP guidance", "group": "Voluntary disclosure", "color": "#C14A4A", "miles": [[2005, "1st ed.", 1], [2010, "2nd ed.", -1], [2015, "3rd ed.", -1], [2020, "4th ed.", 1], [2025, "5th ed.", -1]], "band": [2007, 2025], "stats": {"projects": 3, "observations": 37, "countries": 3, "mt": 97.6}}, {"name": "SASB Standards", "group": "Voluntary disclosure", "color": "#C14A4A", "miles": [[2018, "Codified standards", 1], [2022, "Into IFRS Foundation", -1]], "band": [2020, 2024], "stats": {"projects": 2, "observations": 6, "countries": 1, "mt": 5.8}}, {"name": "TCFD", "group": "Voluntary disclosure", "color": "#C14A4A", "miles": [[2017, "Recommendations", 1], [2023, "Disbanded", -1]], "band": [2022, 2024], "stats": {"projects": 1, "observations": 3, "countries": 1, "mt": 0.1}}, {"name": "IPCC 2006 Guidelines", "group": "National-inventory methodology", "color": "#2E7D64", "miles": [[2006, "Published", 1], [2019, "2019 Refinement", 1]], "band": [1996, 2023], "stats": {"projects": 5, "observations": 61, "countries": 4, "mt": 27.8}}, {"name": "ISO 50001", "group": "Management system & certification", "color": "#8A5CA8", "miles": [[2011, "First edition", 1], [2018, "ISO 50001:2018", 1]], "band": [2016, 2024], "stats": {"projects": 2, "observations": 11, "countries": 2, "mt": 7.2}}, {"name": "Puro Standard", "group": "Management system & certification", "color": "#8A5CA8", "miles": [[2019, "Puro Standard", 1], [2021, "GSC methodology v1", -1], [2024, "GSC Edition 2024", 1]], "band": [2023, 2025], "stats": {"projects": 2, "observations": 7, "countries": 1, "mt": "<0.1"}}]};
+const M4 = { t: 56, r: 28, b: 30, l: 212 }, W4 = 1100, H4 = 600;
+const iw4 = W4 - M4.l - M4.r, ih4 = H4 - M4.t - M4.b;
+const svg4 = d3.select('#figure4-svg');
+const g4 = svg4.append('g').attr('transform', `translate(${M4.l},${M4.t})`);
+const x4 = d3.scaleLinear().domain([1994.6, 2026.6]).range([0, iw4]);
+const rowH = ih4 / tl.rows.length;
+const leg = svg4.append('g').attr('transform', `translate(${M4.l},20)`);
+let lx = 0;
+let activeGroup = null;
+const rowEls = [];
+const chipEls = [];
+const applyGroupFilter = () => {
+    rowEls.forEach(e => e.g.transition().duration(150).attr('opacity', (!activeGroup || e.group === activeGroup) ? 1 : 0.1));
+    chipEls.forEach(c => {
+        const on = !activeGroup || c.group === activeGroup;
+        c.g.attr('opacity', on ? 1 : 0.35);
+        c.marker.attr('opacity', (activeGroup && c.group === activeGroup) ? 1 : 0);
+    });
+};
+tl.groups.forEach(gr => {
+    const chip = leg.append('g').attr('transform', `translate(${lx},0)`).style('cursor', 'pointer');
+    chip.append('rect').attr('x', 0).attr('y', -9).attr('width', 11).attr('height', 11).attr('rx', 2).attr('fill', gr.color);
+    const t = chip.append('text').attr('x', 16).attr('y', 1).attr('font-size', 11.5).attr('fill', '#142f40').text(gr.name);
+    const tw = t.node().getComputedTextLength();
+    const marker = chip.append('rect').attr('x', 0).attr('y', 6).attr('width', 16 + tw).attr('height', 2)
+        .attr('fill', gr.color).attr('opacity', 0);
+    chip.append('rect').attr('x', -4).attr('y', -14).attr('width', 16 + tw + 8).attr('height', 26).attr('fill', 'transparent');
+    chip.on('click', () => { activeGroup = (activeGroup === gr.name) ? null : gr.name; applyGroupFilter(); });
+    chipEls.push({ g: chip, group: gr.name, marker: marker });
+    lx += 16 + tw + 26;
+});
+g4.append('g').call(d3.axisTop(x4).tickValues(d3.range(1995, 2026, 5)).tickFormat(d3.format('d')).tickSizeOuter(0))
+    .call(s => { s.selectAll('text').attr('font-size', 11.5); s.select('.domain').attr('stroke', '#8b98a2'); });
+d3.range(1995, 2026, 5).forEach(yr => {
+    g4.append('line').attr('x1', x4(yr)).attr('x2', x4(yr)).attr('y1', 0).attr('y2', ih4)
+        .attr('stroke', '#eef1f4');
+});
+const tip4 = d3.select('#figure4-tooltip');
+tl.rows.forEach((r, i) => {
+    const yc = i * rowH + rowH / 2;
+    const row = g4.append('g');
+    rowEls.push({ g: row, group: r.group });
+    const hl = row.append('rect').attr('x', -M4.l + 8).attr('y', i * rowH).attr('width', iw4 + M4.l - 8).attr('height', rowH)
+        .attr('fill', '#f3f7f8').attr('opacity', 0);
+    row.append('text').attr('x', -14).attr('y', yc + 4).attr('text-anchor', 'end')
+        .attr('font-size', 12.3).attr('fill', '#142f40').attr('font-weight', 600).text(r.name);
+    const first = d3.min(r.miles, m => m[0]);
+    row.append('line').attr('x1', x4(first)).attr('x2', x4(2026)).attr('y1', yc).attr('y2', yc)
+        .attr('stroke', r.color).attr('stroke-width', 1.1).attr('opacity', .4);
+    if (r.band) {
+        row.append('rect').attr('x', x4(r.band[0] - 0.35)).attr('y', yc - 8)
+            .attr('width', x4(r.band[1] + 0.35) - x4(r.band[0] - 0.35)).attr('height', 16).attr('rx', 4)
+            .attr('fill', r.color).attr('opacity', .2);
+    }
+    r.miles.forEach(m => {
+        row.append('rect')
+            .attr('x', -5).attr('y', -5).attr('width', 10).attr('height', 10)
+            .attr('transform', `translate(${x4(m[0])},${yc}) rotate(45)`)
+            .attr('fill', r.color).attr('stroke', '#fff').attr('stroke-width', 1)
+            .on('mousemove', (event) => {
+                event.stopPropagation();
+                tip4.style('visibility', 'visible')
+                    .html(`<strong>${m[0]}</strong> &mdash; ${m[1]}<br><span style="color:#526773">${r.name}</span>`)
+                    .style('top', (event.pageY - 12) + 'px').style('left', (event.pageX + 14) + 'px');
+            });
+    });
+    row.on('mousemove', (event) => {
+        hl.attr('opacity', 1);
+        if (event.defaultPrevented) return;
+        const cited = r.band ? `${r.band[0]}&ndash;${r.band[1]}` : 'none';
+        tip4.style('visibility', 'visible')
+            .html(`<strong>${r.name}</strong><br>` +
+                `<span style="color:#526773">${r.group}</span><br>` +
+                `Projects: ${r.stats.projects} &middot; Observations: ${r.stats.observations} &middot; Countries: ${r.stats.countries}<br>` +
+                `Cumulative stored citing it: ${r.stats.mt} Mt<br>` +
+                `Years cited: ${cited}`)
+            .style('top', (event.pageY - 12) + 'px').style('left', (event.pageX + 14) + 'px');
+    }).on('mouseleave', () => { hl.attr('opacity', 0); tip4.style('visibility', 'hidden'); });
+});
+</script>

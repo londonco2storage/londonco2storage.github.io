@@ -5,13 +5,13 @@ title = 'The London Register of Subsurface CO2 Storage'
 [menus]
 
 [[menus.main]]
-name = 'The London Register of Subsurface CO<sub>2</sub> Storage'
+name = 'Home'
 pageRef = '/'
 weight = 10
 
 [[menus.main]]
-name = 'About the Project'
-pageRef = '/project'
+name = 'Data &amp; Downloads'
+pageRef = '/data'
 weight = 20
 
 [[menus.main]]
@@ -19,7 +19,7 @@ name = 'Additional visualisation'
 pageRef = '/visualisation'
 weight = 30
 
-# [[menus.main]]
-# name = 'Report'
-# pageRef = '/report'
-# weight = 40
+[[menus.main]]
+name = 'About'
+pageRef = '/project'
+weight = 40

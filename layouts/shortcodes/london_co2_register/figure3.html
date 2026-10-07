@@ -1,0 +1,75 @@
+{{- $reg := site.Data.register }}
+<div class="ichart-panel">
+    <div class="ichart-title">Figure 3 &mdash; Annual CO&#8322; storage by storage type</div>
+    <div class="ichart-sub">Storage via enhanced oil recovery (EOR) vs dedicated geological storage (DS), 1996&ndash;2025
+        &middot; million tonnes per year &middot; data release {{ $reg.meta.release }}</div>
+    <div id="figure3-tooltip" class="ichart-tooltip"></div>
+    <svg id="figure3-svg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" role="img"
+        aria-label="Annual CO2 storage by storage type, EOR versus dedicated storage"></svg>
+    <div class="ichart-sub" style="margin-top:.35rem;">2025 reporting is incomplete; dashed segments and open markers show the available 2025 data.</div>
+</div>
+<script type="module">
+const f3Data = [{"year": 1996, "eor": 0.0, "ds": 0.07, "eorN": 0, "dsN": 1}, {"year": 1997, "eor": 0.0, "ds": 0.665, "eorN": 0, "dsN": 1}, {"year": 1998, "eor": 0.0, "ds": 0.842, "eorN": 0, "dsN": 1}, {"year": 1999, "eor": 0.0, "ds": 0.971, "eorN": 0, "dsN": 1}, {"year": 2000, "eor": 1.5556, "ds": 0.933, "eorN": 1, "dsN": 1}, {"year": 2001, "eor": 1.5556, "ds": 1.009, "eorN": 1, "dsN": 1}, {"year": 2002, "eor": 1.5556, "ds": 0.955, "eorN": 1, "dsN": 1}, {"year": 2003, "eor": 1.5556, "ds": 0.914, "eorN": 1, "dsN": 1}, {"year": 2004, "eor": 1.5556, "ds": 1.2325, "eorN": 1, "dsN": 2}, {"year": 2005, "eor": 1.5785, "ds": 1.3405, "eorN": 2, "dsN": 2}, {"year": 2006, "eor": 1.8485, "ds": 1.3025, "eorN": 3, "dsN": 2}, {"year": 2007, "eor": 2.0029, "ds": 1.4035, "eorN": 5, "dsN": 2}, {"year": 2008, "eor": 6.6986, "ds": 1.5301, "eorN": 7, "dsN": 4}, {"year": 2009, "eor": 8.6974, "ds": 1.6789, "eorN": 8, "dsN": 4}, {"year": 2010, "eor": 8.8945, "ds": 1.6855, "eorN": 7, "dsN": 3}, {"year": 2011, "eor": 9.1145, "ds": 1.9615, "eorN": 7, "dsN": 6}, {"year": 2012, "eor": 6.2861, "ds": 1.8236, "eorN": 8, "dsN": 7}, {"year": 2013, "eor": 10.0656, "ds": 1.663, "eorN": 15, "dsN": 6}, {"year": 2014, "eor": 11.1466, "ds": 1.7676, "eorN": 16, "dsN": 7}, {"year": 2015, "eor": 14.7372, "ds": 1.982, "eorN": 18, "dsN": 9}, {"year": 2016, "eor": 18.2059, "ds": 2.7814, "eorN": 18, "dsN": 9}, {"year": 2017, "eor": 20.7311, "ds": 3.0606, "eorN": 18, "dsN": 7}, {"year": 2018, "eor": 22.0094, "ds": 3.4149, "eorN": 18, "dsN": 8}, {"year": 2019, "eor": 20.2214, "ds": 6.6585, "eorN": 18, "dsN": 10}, {"year": 2020, "eor": 22.2728, "ds": 5.7251, "eorN": 19, "dsN": 10}, {"year": 2021, "eor": 24.0171, "ds": 4.5071, "eorN": 20, "dsN": 10}, {"year": 2022, "eor": 27.1276, "ds": 4.9284, "eorN": 21, "dsN": 14}, {"year": 2023, "eor": 36.189, "ds": 5.5349, "eorN": 23, "dsN": 17}, {"year": 2024, "eor": 36.1675, "ds": 7.4159, "eorN": 25, "dsN": 24}, {"year": 2025, "eor": 31.368, "ds": 4.7977, "eorN": 12, "dsN": 17}];
+const M = { t: 25, r: 190, b: 38, l: 58 }, W = 1000, H = 560;
+const iw = W - M.l - M.r, ih = H - M.t - M.b;
+const svg = d3.select('#figure3-svg');
+const g = svg.append('g').attr('transform', `translate(${M.l},${M.t})`);
+const x = d3.scaleLinear().domain([1996, 2025]).range([0, iw]);
+const ymax = d3.max(f3Data, d => Math.max(d.eor, d.ds));
+const y = d3.scaleLinear().domain([0, ymax * 1.12]).range([ih, 0]).nice();
+g.append('rect').attr('x', x(2024.5)).attr('y', 0).attr('width', x(2025) - x(2024.5) + 14).attr('height', ih)
+    .attr('fill', '#eef1f4');
+g.append('g').attr('class', 'f3-grid').call(d3.axisLeft(y).ticks(6).tickSize(-iw).tickFormat(''))
+    .call(s => { s.selectAll('line').attr('stroke', '#e4e9ec'); s.select('.domain').remove(); });
+g.append('g').attr('transform', `translate(0,${ih})`)
+    .call(d3.axisBottom(x).tickValues(d3.range(1996, 2026, 4).concat([2025])).tickFormat(d3.format('d')).tickSizeOuter(0))
+    .call(s => { s.selectAll('text').attr('font-size', 12); s.select('.domain').attr('stroke', '#8b98a2'); });
+g.append('g').call(d3.axisLeft(y).ticks(6).tickSizeOuter(0))
+    .call(s => { s.selectAll('text').attr('font-size', 12); s.select('.domain').remove(); s.selectAll('line').attr('stroke', '#8b98a2'); });
+g.append('text').attr('transform', 'rotate(-90)').attr('x', -ih / 2).attr('y', -42).attr('text-anchor', 'middle')
+    .attr('font-size', 12.5).attr('fill', '#142f40').text('Recorded CO₂ storage (million tonnes)');
+const SER = [
+    { key: 'eor', label: 'Storage via EOR', color: '#C14A4A', sym: 'circle' },
+    { key: 'ds', label: 'Dedicated geological storage (DS)', color: '#2A5682', sym: 'square' }
+];
+SER.forEach(s => {
+    const solid = f3Data.filter(d => d.year <= 2024);
+    const tail = f3Data.filter(d => d.year >= 2024);
+    const line = d3.line().x(d => x(d.year)).y(d => y(d[s.key]));
+    g.append('path').datum(solid).attr('fill', 'none').attr('stroke', s.color).attr('stroke-width', 2.2).attr('d', line);
+    g.append('path').datum(tail).attr('fill', 'none').attr('stroke', s.color).attr('stroke-width', 2)
+        .attr('stroke-dasharray', '5,4').attr('d', line);
+    f3Data.forEach(d => {
+        const open = d.year === 2025;
+        if (s.sym === 'circle') {
+            g.append('circle').attr('cx', x(d.year)).attr('cy', y(d[s.key])).attr('r', 3.4)
+                .attr('fill', open ? '#fff' : s.color).attr('stroke', s.color).attr('stroke-width', 1.5);
+        } else {
+            g.append('rect').attr('x', x(d.year) - 3.1).attr('y', y(d[s.key]) - 3.1).attr('width', 6.2).attr('height', 6.2)
+                .attr('fill', open ? '#fff' : s.color).attr('stroke', s.color).attr('stroke-width', 1.5);
+        }
+    });
+    const last = f3Data[f3Data.length - 1];
+    g.append('text').attr('x', x(2025) + 16).attr('y', y(last[s.key]) + 4)
+        .attr('font-size', 13).attr('fill', s.color).attr('font-weight', 600).text(s.label)
+        .call(t => { if (s.key === 'ds') { t.text(''); t.append('tspan').attr('x', x(2025) + 16).text('Dedicated geological'); t.append('tspan').attr('x', x(2025) + 16).attr('dy', 15).text('storage (DS)'); } });
+});
+const tip = d3.select('#figure3-tooltip');
+const guide = g.append('line').attr('y1', 0).attr('y2', ih).attr('stroke', '#8b98a2')
+    .attr('stroke-dasharray', '3,3').style('visibility', 'hidden');
+const f1 = d3.format('.1f');
+svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', iw).attr('height', ih)
+    .attr('fill', 'transparent')
+    .on('mousemove', (event) => {
+        const [mx] = d3.pointer(event, g.node());
+        const yr = Math.max(1996, Math.min(2025, Math.round(x.invert(mx))));
+        const d = f3Data.find(v => v.year === yr);
+        guide.attr('x1', x(yr)).attr('x2', x(yr)).style('visibility', 'visible');
+        tip.style('visibility', 'visible')
+            .html(`<strong>${yr}</strong>${yr === 2025 ? ' (incomplete)' : ''}<br>` +
+                `<span style="color:#C14A4A">&#9679;</span> EOR: ${f1(d.eor)} Mt &middot; ${d.eorN} project${d.eorN === 1 ? '' : 's'}<br>` +
+                `<span style="color:#2A5682">&#9632;</span> DS: ${f1(d.ds)} Mt &middot; ${d.dsN} project${d.dsN === 1 ? '' : 's'}`)
+            .style('top', (event.pageY - 12) + 'px').style('left', (event.pageX + 14) + 'px');
+    })
+    .on('mouseleave', () => { tip.style('visibility', 'hidden'); guide.style('visibility', 'hidden'); });
+</script>

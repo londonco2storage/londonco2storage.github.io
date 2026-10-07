@@ -3,3 +3,7 @@
     crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/002829eafc.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+{{- with site.Data.register.meta.goatcounter }}
+<script data-goatcounter="https://{{ . }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+{{- end }}

@@ -1,0 +1,11 @@
+{{- $reg := site.Data.register }}
+<div class="kpi-band" role="list" aria-label="Key register figures">
+    {{- range $reg.kpi }}
+    <div class="kpi-card" role="listitem">
+        <div class="kpi-value">{{ .value }}<span class="kpi-unit">{{ .unit }}</span></div>
+        <div class="kpi-label">{{ .label }}</div>
+        <div class="kpi-note">{{ .note }}</div>
+    </div>
+    {{- end }}
+</div>
+<div class="kpi-release">Data release {{ $reg.meta.release }} &middot; updated {{ $reg.meta.updated }}</div>

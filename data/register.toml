@@ -1,0 +1,114 @@
+[meta]
+release = "v9"
+updated = "7 October 2026"
+updated_short = "07-Oct-26"
+zenodo = "https://zenodo.org/records/18016847"
+raeng = "https://raeng.org.uk/programmes-and-prizes/programmes/uk-grants-and-prizes/support-for-research/research-awardees/research-chairs-and-senior-research-fellowships-awardees/cohort-15-and-16-2022-2023/dr-samuel-krevor-imperial-college-london/"
+goatcounter = "londonco2storage"
+citation = "Gao, X., & Krevor, S. (2026). The London Register of Subsurface CO2 Storage: 2026 Annual Report. Imperial College London."
+bibtex = """@techreport{gao2026londonregister,
+  author      = {Gao, Xiaowei and Krevor, Samuel},
+  title       = {The London Register of Subsurface CO2 Storage: 2026 Annual Report},
+  institution = {Imperial College London},
+  year        = {2026},
+  url         = {https://imperialcollegelondon.github.io/The-London-Register-of-Subsurface-CO2-Storage/}
+}"""
+
+[[kpi]]
+label = "Cumulative CO2 stored"
+value = "421.7"
+unit = "Mt"
+note = "1996-2025, incl. incomplete 2025"
+
+[[kpi]]
+label = "Stored in 2024"
+value = "43.6"
+unit = "Mt"
+note = "most recent complete year"
+
+[[kpi]]
+label = "Reported for 2025"
+value = "36.2"
+unit = "Mt"
+note = "reporting still incomplete"
+
+[[kpi]]
+label = "Projects"
+value = "70"
+unit = ""
+note = "across 17 countries"
+
+[[doc]]
+year = "2025"
+title = "Annual Report 2025"
+file = "downloads/London_Register_Annual_Report_2025.pdf"
+cover = "images/covers/cover_ar_2025.png"
+
+[[doc]]
+year = "2025"
+title = "DNV Data Quality Assurance 2025"
+file = "downloads/DNV_Data_Quality_Assurance_2025.pdf"
+cover = "images/covers/cover_dnv_2025.png"
+
+[[doc]]
+year = "2026"
+title = "Annual Report 2026 (draft)"
+file = "downloads/London_Register_Annual_Report_2026_draft.pdf"
+cover = "images/covers/cover_ar_2026.png"
+
+[[doc]]
+year = "2026"
+title = "Methodology Report 2026 (draft)"
+file = "downloads/London_Register_Methodology_2026_draft.pdf"
+cover = "images/covers/cover_meth_2026.png"
+
+[[doc]]
+year = "2026"
+title = "DNV Data Assurance Summary 2026 (draft)"
+file = "downloads/DNV_Data_Assurance_Summary_2026_draft.pdf"
+cover = "images/covers/cover_dnv_2026.png"
+
+[[history]]
+version = "v1"
+date = "4 Feb 2026"
+note = "Initial imported Register release."
+
+[[history]]
+version = "v2"
+date = "8 Jun 2026"
+note = "Data cleaning: source references, controlled storage-type values, EPA priority records."
+
+[[history]]
+version = "v3"
+date = "8 Jun 2026"
+note = "EPA 2024 U.S. geologic-sequestration update; new U.S. projects."
+
+[[history]]
+version = "v4"
+date = "8 Jun 2026"
+note = "2025 reference batch reviewed and integrated."
+
+[[history]]
+version = "v5"
+date = "8 Jul 2026"
+note = "ICL internal-check integration; assurance snapshot."
+
+[[history]]
+version = "v6"
+date = "23 Aug 2026"
+note = "Northern Lights added; post-assurance updates."
+
+[[history]]
+version = "v7"
+date = "15 Sep 2026"
+note = "External review integration; ACTL regulator series adopted."
+
+[[history]]
+version = "v8"
+date = "18 Sep 2026"
+note = "Metric-basis fields added; source-review corrections; storage-type audit."
+
+[[history]]
+version = "v9"
+date = "7 Oct 2026"
+note = "Clive Sequestration Facility 2025 value added from Alberta Petrinex data."

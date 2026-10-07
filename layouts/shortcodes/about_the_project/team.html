@@ -5,7 +5,7 @@
         {{ range $index, $member := .Site.Data.team.member }}
         <div class="row mt-1 mb-1  d-flex justify-content-center align-items-center list-item">
             <div class="col-lg-2 text-center">
-                <div class="team-avatar rounded-3" style="background-image: url('{{ absURL "images/"}}{{.avatar}}');">
+                <div class="team-avatar rounded-3" style="background-image: url('{{ relURL "images/"}}{{.avatar}}');">
                 </div>
             </div>
             <div class="col-lg-10">
