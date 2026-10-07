@@ -5,7 +5,7 @@
     <a class="news-item" href="{{ .url }}" target="_blank" rel="noopener">
         {{- $logo := printf "https://www.google.com/s2/favicons?domain=%s&sz=64" $u.Host }}
         {{- with .logo }}{{ $logo = relURL . }}{{ end }}
-        <img class="news-logo" src="{{ $logo }}" alt="" loading="lazy" aria-hidden="true">
+        <img class="news-logo" src="{{ $logo }}" width="34" height="34" alt="" loading="lazy" aria-hidden="true">
         <div class="news-body">
             <div class="news-meta">
                 <span class="news-outlet">{{ .outlet }}</span>
