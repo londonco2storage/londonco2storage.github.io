@@ -3,8 +3,9 @@
     {{- range $reg.news }}
     {{- $u := urls.Parse .url }}
     <a class="news-item" href="{{ .url }}" target="_blank" rel="noopener">
-        <img class="news-logo" src="https://www.google.com/s2/favicons?domain={{ $u.Host }}&amp;sz=64"
-            alt="" loading="lazy" aria-hidden="true">
+        {{- $logo := printf "https://www.google.com/s2/favicons?domain=%s&sz=64" $u.Host }}
+        {{- with .logo }}{{ $logo = relURL . }}{{ end }}
+        <img class="news-logo" src="{{ $logo }}" alt="" loading="lazy" aria-hidden="true">
         <div class="news-body">
             <div class="news-meta">
                 <span class="news-outlet">{{ .outlet }}</span>

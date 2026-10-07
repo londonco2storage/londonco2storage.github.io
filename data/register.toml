@@ -118,6 +118,7 @@ outlet = "Global CCS Institute"
 date = "June 2026"
 title = "London Climate Action Week 2026 recap"
 url = "https://www.globalccsinstitute.com/lcaw2026recap/"
+logo = "images/news/globalccsinstitute.png"
 
 [[news]]
 outlet = "E&T Magazine (IET)"
