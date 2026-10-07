@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ .Site.LanguageCode }}">
 {{- partial "head.html" . -}}
 <body>
     <div class="base-container">
@@ -7,9 +7,9 @@
             {{- partial "header.html" . -}}
         </div>
 
-        <div id="content" class="base-content">
+        <main id="content" class="base-content">
             {{- block "main" . }}{{- end }}
-        </div>
+        </main>
 
         <div class="base-footer mt-4">
             {{- partial "footer.html" . -}}
