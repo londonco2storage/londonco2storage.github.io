@@ -1,12 +1,17 @@
 {{- $reg := site.Data.register }}
 <div class="news-list">
     {{- range $reg.news }}
+    {{- $u := urls.Parse .url }}
     <a class="news-item" href="{{ .url }}" target="_blank" rel="noopener">
-        <div class="news-meta">
-            <span class="news-outlet">{{ .outlet }}</span>
-            {{- with .date }}<span class="news-date">{{ . }}</span>{{ end }}
+        <img class="news-logo" src="https://www.google.com/s2/favicons?domain={{ $u.Host }}&amp;sz=64"
+            alt="" loading="lazy" aria-hidden="true">
+        <div class="news-body">
+            <div class="news-meta">
+                <span class="news-outlet">{{ .outlet }}</span>
+                {{- with .date }}<span class="news-date">{{ . }}</span>{{ end }}
+            </div>
+            <div class="news-title">{{ .title }} <span class="news-ext" aria-hidden="true">&#8599;</span></div>
         </div>
-        <div class="news-title">{{ .title }} <span class="news-ext" aria-hidden="true">&#8599;</span></div>
     </a>
     {{- end }}
 </div>

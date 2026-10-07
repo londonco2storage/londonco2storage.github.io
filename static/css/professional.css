@@ -625,3 +625,6 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .news-date { font-size: .72rem; color: var(--muted); }
 .news-title { font-size: .95rem; font-weight: 600; line-height: 1.4; }
 .news-ext { color: var(--muted); font-size: .85rem; }
+.news-item { display: flex; gap: .9rem; align-items: flex-start; }
+.news-logo { width: 30px; height: 30px; border-radius: 7px; flex: 0 0 auto; margin-top: .15rem; background: var(--wash); }
+.news-body { min-width: 0; }
