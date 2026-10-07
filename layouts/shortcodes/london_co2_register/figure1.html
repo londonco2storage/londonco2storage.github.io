@@ -24,12 +24,12 @@
 </figcaption>
 
 <template id="legend-grp-template">
-    <div class="legend-grp">
-        <b>
-            <div class="legend-grp-header" style="font-size: 10px; color: white"></div>
-        </b>
-        <div class="legend-grp-content"></div>
-    </div>
+    <details class="legend-grp">
+        <summary class="legend-country-toggle"></summary>
+        <div class="legend-grp-content">
+            <button type="button" class="legend-grp-header">Show only this country / reset</button>
+        </div>
+    </details>
 </template>
 
 <template id="legend-btn-template">
@@ -179,13 +179,14 @@
         const grpHeader = grpClone.querySelector('.legend-grp-header');
         grpHeader.id = `legend-grp-header-${cat.id}`;
         grpHeader.style.backgroundColor = cat.color;
-        grpHeader.textContent = cat.name;
         grpHeader.onclick = (e) => {
             onlyShowGroup(cat.id);
             plot();
         }
 
-        const grpWrap = grpClone.querySelector('.legend-grp')
+        const countryToggle = grpClone.querySelector('.legend-country-toggle');
+        countryToggle.textContent = cat.name;
+        countryToggle.style.setProperty('--country-color', cat.color);
 
         const grpContent = grpClone.querySelector('.legend-grp-content');
         drawLegends(cat, grpContent);

@@ -5,13 +5,20 @@
     </h3> -->
 
     <div class="register-table-scroll" tabindex="0" role="region" aria-label="CO2 storage project data">
-        <div style="position: sticky; top: 0px;">
-            <table class="table1">
+            <table class="table1 register-data-table">
+                <colgroup>
+                    <col span="3" class="register-meta-column">
+                    <col span="30" class="register-year-column">
+                </colgroup>
                 <thead class="table-header">
                     <tr>
                         <th data-n=0 class="table1-meta-cell">CO2 Storage Project</th>
                         <th data-n=1 class="table1-meta-cell">Project Operator</th>
-                        <th data-n=2 class="table1-meta-cell">Storage Type</th>
+                        <th data-n=2 class="table1-meta-cell">
+                            <select id="storage-type-filter" aria-label="Filter by Storage Type">
+                                <option value="">Storage Type: All</option>
+                            </select>
+                        </th>
                         <th data-n=3 class="table1-number-cell">1996</th>
                         <th data-n=4 class="table1-number-cell">1997</th>
                         <th data-n=5 class="table1-number-cell">1998</th>
@@ -44,15 +51,10 @@
                         <th data-n=32 class="table1-number-cell">2025</th>
                     </tr>
                 </thead>
-            </table>
-        </div>
-        <div style="overflow: visible; max-height: calc(100vh*0.6);">
-            <table>
                 <tbody id="table-body">
 
                 </tbody>
             </table>
-        </div>
     </div>
 
     <template id="table-row-country-template">
@@ -207,7 +209,26 @@
 
     const rowTemplate = document.getElementById('table-row-record-template');
     const tableBody = document.getElementById('table-body');
-    Object.entries(data).forEach(([country, countryRecords]) => {
+    const storageTypeFilter = document.getElementById('storage-type-filter');
+    const storageTypes = [...new Set(Object.values(data).flat()
+        .filter(item => item.type === 'record')
+        .map(item => item.storage_type || 'Not specified'))].sort();
+    storageTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        storageTypeFilter.appendChild(option);
+    });
+
+    const renderTable = () => {
+        tableBody.replaceChildren();
+        const selectedType = storageTypeFilter.value;
+        Object.entries(data).forEach(([country, records]) => {
+        const countryRecords = selectedType
+            ? records.filter(item => item.type === 'record' &&
+                (item.storage_type || 'Not specified') === selectedType)
+            : records;
+        if (!countryRecords.length) return;
         const countryRowTemplate = document.getElementById('table-row-country-template');
         const countryRowNode = countryRowTemplate.content.cloneNode(true);
         countryRowNode.class = "table-row-country-name"
@@ -246,5 +267,8 @@
 
             tableBody.appendChild(recordRowNode);
         })
-    })
+        });
+    };
+    storageTypeFilter.addEventListener('change', renderTable);
+    renderTable();
 </script>
