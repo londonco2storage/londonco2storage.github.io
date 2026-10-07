@@ -5,6 +5,6 @@ draft: false
 layout: single
 ---
 
-Coverage of the London Register of Subsurface CO₂ Storage and its annual findings.
+Selected media coverage of the London Register of Subsurface CO₂ Storage and its annual findings.
 
 {{< london_co2_register/news >}}
