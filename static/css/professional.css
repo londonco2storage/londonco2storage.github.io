@@ -1,0 +1,78 @@
+/* Shared visual system. Scientific chart colours and data remain unchanged. */
+:root {
+  --ink: #142f40;
+  --muted: #526773;
+  --teal: #087c80;
+  --line: #dce5e9;
+  --wash: #f3f7f8;
+  --bs-body-color: var(--ink);
+  --bs-link-color: #086e76;
+  --bs-link-hover-color: #114855;
+}
+body { font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif; font-size: 16px; line-height: 1.7; color: var(--ink); background: #fff; }
+.base-container { min-height: 100vh; height: auto; }
+.base-content { padding-bottom: 3rem; min-width: 0; }
+h1, h2, h3, h4 { color: var(--ink); font-weight: 650; line-height: 1.2; letter-spacing: -.025em; }
+h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 1.5rem; }
+h4 { font-size: 1.4rem; margin-bottom: 1rem; }
+p { margin-bottom: 1.3rem; }
+a { text-underline-offset: .2em; }
+a:focus-visible, button:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #b78524; outline-offset: 4px; }
+.base-header { border-top: 5px solid var(--teal); border-bottom: 1px solid var(--line); box-shadow: none !important; }
+.site-nav { padding: 1.25rem 0; background: #fff; }
+.site-nav > .container-fluid { max-width: 1440px; padding-inline: 2rem; }
+.site-nav .navbar-nav { width: 100%; align-items: center; gap: 1.75rem; }
+.site-nav .nav-item:first-child { margin-right: auto; max-width: 480px; }
+.site-nav .nav-link { color: var(--muted); font-size: .95rem; font-weight: 600; padding: .65rem 0; border-bottom: 2px solid transparent; }
+.site-nav .nav-item:first-child .nav-link { color: var(--ink); font-size: 1.15rem; line-height: 1.35; letter-spacing: -.025em; }
+.site-nav .nav-link:hover, .site-nav .nav-link.active { color: var(--teal); border-color: var(--teal); }
+.navbar-toggler { border-color: var(--line); padding: .6rem; }
+.register-heading { padding: clamp(2.5rem, 5vw, 5rem) max(1.5rem, calc((100vw - 1320px) / 2)); background: var(--ink); border-bottom: 5px solid #56b6b1; }
+.register-heading h1 { max-width: 950px; margin: 0; color: #fff; font-size: clamp(2rem, 4vw, 3.65rem); font-weight: 600; }
+.chart-panel { margin: 2.5rem 1.5rem 1rem; padding: 1.5rem 1rem; max-width: calc(100% - 3rem); overflow: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; box-shadow: 0 8px 28px #142f4007; }
+.figure-caption { color: var(--muted); font-size: .875rem; line-height: 1.6; padding: .75rem 1.5rem; }
+.base-content > hr { max-width: 1320px; margin: 3rem auto; border-color: var(--line); opacity: 1; }
+.report-panel { margin: 3rem auto; max-width: 1320px; padding: 2rem 2.5rem; background: var(--wash); border-left: 4px solid var(--teal); }
+.report-panel > .mt-5 { margin: 0 !important; }
+.report-panel h4 { font-size: 1.75rem; }
+.report-panel ol { margin: 1.5rem 0 0; padding-left: 1.3rem; }
+.report-panel li { padding: .4rem 0 .4rem .5rem; }
+.team-icon { color: #086e76; overflow-wrap: anywhere; }
+.team-icon:hover { color: var(--ink); }
+.register-table-section { margin: 2.5rem 1.5rem; }
+.register-table-scroll { overflow: auto; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+.register-table-scroll > div:first-child { z-index: 2; }
+.register-table-scroll table { border-collapse: collapse; font-size: .85rem; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.table-header { background: var(--ink); color: #fff; }
+.table1 th { padding: 1rem .75rem; font-weight: 600; }
+.table1-meta-cell, .table1-number-cell { padding: .65rem .75rem; border-bottom-color: var(--line); }
+.table-row-country-name { background: #e3edf0; color: var(--ink); }
+.table-row-national-total { background: #e7f2ed; color: #205344; }
+.table-row-total-other { background: #1b596b; }
+.table-row-total-disclose { background: #175e52; }
+.table-row-record-tr:nth-child(even) { background: #f7f9fa; }
+.table-row-record-tr:hover { background: #edf5f5; }
+.footnote { margin-top: 1.5rem; background: var(--wash); border: 1px solid var(--line); padding: 1.5rem; border-radius: 4px; font-size: .9rem; }
+.base-content > .container { padding-top: 1rem; padding-bottom: 1rem; }
+.base-content > .container:first-child { padding-top: 3rem; }
+.base-content > .container-fluid { padding-block: 2rem; }
+.list-item { padding: 1.75rem 1.25rem; border-radius: 4px; }
+.list-item:hover { background: #eaf1f3; }
+.team-avatar { border: 1px solid var(--line); margin-bottom: 1rem; }
+hr { border-color: var(--line); }
+#yearSelect { padding: .65rem .8rem; background: var(--wash); color: var(--ink); border-radius: 4px; font: inherit; font-weight: 600; }
+.footer { background: var(--ink); border-top: 4px solid var(--teal); color: #dbe7eb; text-align: left; padding: 2.25rem max(1.5rem, calc((100vw - 1320px) / 2)); font-size: .85rem; }
+@media (max-width: 991.98px) {
+  .site-nav > .container-fluid { padding-inline: 1.5rem; }
+  .site-nav .navbar-nav { align-items: stretch; gap: .35rem; padding-top: 1rem; }
+  .site-nav .nav-item:first-child { max-width: none; margin: 0; }
+  .report-panel { margin-inline: 1.5rem; padding: 1.5rem; }
+}
+@media (max-width: 575.98px) {
+  body { font-size: 15px; }
+  .chart-panel { margin-inline: .75rem; max-width: calc(100% - 1.5rem); padding: .75rem; }
+  .register-table-section { margin-inline: .75rem; }
+  .report-panel { margin-inline: .75rem; }
+  .base-content > .container-fluid { padding-inline: 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }

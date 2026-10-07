@@ -1,5 +1,5 @@
 {{- $page := .Page }}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav aria-label="Main navigation" class="navbar navbar-expand-lg site-nav">
   <div class="container-fluid">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +18,7 @@
         {{- else if .HasChildren }}
         {{- $attrs = merge $attrs (dict "class" "nav-link dropdown-toggle" "aria-current" "true") }}
         {{- else }}
-        {{- $attrs = merge $attrs (dict "class" "nav-link" "aria-current" "true") }}
+        {{- $attrs = merge $attrs (dict "class" "nav-link") }}
         {{- end }}
         {{- $name := .Name }}
         {{- with .Identifier }}
