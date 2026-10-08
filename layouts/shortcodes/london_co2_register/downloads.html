@@ -7,8 +7,12 @@
         {{- range $year := slice "2025" "2026" }}
         <div class="downloads-group">
             <h3 class="downloads-year">{{ $year }} edition</h3>
+            {{- $docs := where $reg.doc "year" $year }}
+            {{- if not $docs }}
+            <div class="downloads-placeholder">{{ $year }} materials will be published soon.</div>
+            {{- end }}
             <div class="downloads-cards">
-                {{- range $reg.doc }}
+                {{- range $docs }}
                 {{- if eq .year $year }}
                 <a class="download-card" href="{{ relURL .file }}" download
                     data-goatcounter-click="download-{{ path.Base .file }}" data-goatcounter-title="{{ .title }}">

@@ -657,3 +657,14 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   .register-table-toolbar { gap: .6rem; }
   .register-table-toolbar input[type="search"] { min-width: 120px; }
 }
+.downloads-placeholder {
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 2.2rem 2.4rem;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 600;
+  background: var(--wash);
+  min-width: 300px;
+  text-align: center;
+}

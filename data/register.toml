@@ -50,23 +50,23 @@ title = "DNV Data Quality Assurance 2025"
 file = "downloads/DNV_Data_Quality_Assurance_2025.pdf"
 cover = "images/covers/cover_dnv_2025.png"
 
-[[doc]]
-year = "2026"
-title = "Annual Report 2026 (draft)"
-file = "downloads/London_Register_Annual_Report_2026_draft.pdf"
-cover = "images/covers/cover_ar_2026.png"
+# [[doc]]
+# year = "2026"
+# title = "Annual Report 2026 (draft)"
+# file = "downloads/London_Register_Annual_Report_2026_draft.pdf"
+# cover = "images/covers/cover_ar_2026.png"
 
-[[doc]]
-year = "2026"
-title = "Methodology Report 2026 (draft)"
-file = "downloads/London_Register_Methodology_2026_draft.pdf"
-cover = "images/covers/cover_meth_2026.png"
+# [[doc]]
+# year = "2026"
+# title = "Methodology Report 2026 (draft)"
+# file = "downloads/London_Register_Methodology_2026_draft.pdf"
+# cover = "images/covers/cover_meth_2026.png"
 
-[[doc]]
-year = "2026"
-title = "DNV Data Assurance Summary 2026 (draft)"
-file = "downloads/DNV_Data_Assurance_Summary_2026_draft.pdf"
-cover = "images/covers/cover_dnv_2026.png"
+# [[doc]]
+# year = "2026"
+# title = "DNV Data Assurance Summary 2026 (draft)"
+# file = "downloads/DNV_Data_Assurance_Summary_2026_draft.pdf"
+# cover = "images/covers/cover_dnv_2026.png"
 
 [[history]]
 version = "v1"
