@@ -107,6 +107,10 @@
         const svg = d3.select("#project_1_figure_2")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
+        if (window.matchMedia('(max-width: 900px)').matches) {
+            svg.attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+                .attr("preserveAspectRatio", "xMidYMid meet");
+        }
         // .attr("transform", `translate(${margin.left},${margin.top})`);
         // .style("cursor", "default")
         // .attr("viewBox", [0, 0, width, height])

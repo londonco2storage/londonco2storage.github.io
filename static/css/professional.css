@@ -602,7 +602,7 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .stat-map-widget { width: 220px; min-height: 110px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.04); }
 
 /* News coverage list. */
-.news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: .9rem; margin-top: 1.2rem; }
+.news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr)); gap: .9rem; margin-top: 1.2rem; }
 .news-item {
   display: block;
   border: 1px solid var(--line);
@@ -640,3 +640,18 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   object-fit: contain;
 }
 .news-body { min-width: 0; }
+
+/* Mobile refinements (no effect at desktop widths). */
+@media (max-width: 900px) {
+  #project_1_figure_2 { width: 100% !important; height: auto !important; max-width: 100%; }
+  .page-wrap, .masthead-inner, .site-nav > .container-fluid { padding-inline: 1rem; }
+  .masthead-inner { padding-block: .9rem .7rem; }
+  .hero { padding-top: 1.6rem; }
+  #legend { column-count: 1; }
+  .downloads-cards .download-card { width: 160px; max-width: 46%; }
+  .downloads-group + .downloads-group { border-left: 0; padding-left: 0; }
+  .footer-stats-inner { gap: 2rem; padding-inline: 1rem; }
+  .register-table-head { padding: .7rem .8rem; }
+  .register-table-toolbar { gap: .6rem; }
+  .register-table-toolbar input[type="search"] { min-width: 120px; }
+}
