@@ -29,10 +29,6 @@
                 <div class="stat-num" id="gc-total">&ndash;</div>
                 <div class="stat-label">Site visits</div>
             </div>
-            <div class="stat-chip">
-                <div class="stat-num" id="gc-month">&ndash;</div>
-                <div class="stat-label">Home page visits</div>
-            </div>
 
         </div>
     </div>
@@ -57,7 +53,7 @@
                         if (!isNaN(n)) animate(document.getElementById(elId), n);
                     }).catch(function () { });
             };
-            try { load('TOTAL', 'gc-total'); load('/', 'gc-month'); } catch (e) { }
+            try { load('TOTAL', 'gc-total'); } catch (e) { }
         })();
     </script>
     {{- end }}
