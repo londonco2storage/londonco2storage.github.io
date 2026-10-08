@@ -587,9 +587,11 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 #legend .legend-region { break-inside: avoid; }
 .legend-reset-btn { width: 100%; margin: 0 0 .55rem; }
 @media (max-width: 900px) {
-  .fig1-flex { flex-wrap: wrap; }
-  .fig-legend-col { flex: 1 1 100%; }
-  #legend { overflow-y: visible; }
+  .fig1-flex { display: block !important; }
+  .fig1-chart { width: 100%; }
+  .fig-legend-col { display: block !important; width: 100%; margin-top: 1rem; flex: none !important; }
+  #legend { display: block; width: 100%; overflow: visible; column-count: 1; max-height: none; }
+  .legend-reset-btn { max-width: 100%; }
 }
 
 /* Tighter references list. */
