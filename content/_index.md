@@ -5,8 +5,6 @@ draft: false
 layout: single
 ---
 
-{{< london_co2_register/hero >}}
-
 {{< london_co2_register/kpis >}}
 
 {{< london_co2_register/figure1 >}}

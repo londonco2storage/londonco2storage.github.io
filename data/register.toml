@@ -121,6 +121,12 @@ url = "https://www.globalccsinstitute.com/lcaw2026recap/"
 logo = "images/news/globalccsinstitute.png"
 
 [[news]]
+outlet = "WBCSD"
+date = "2026"
+title = "Informing the deployment of carbon capture, utilization and storage"
+url = "https://www.wbcsd.org/resources/informing-the-deployment-of-carbon-capture-utilization-and-storage/"
+
+[[news]]
 outlet = "E&T Magazine (IET)"
 date = "November 2025"
 title = "383 million tonnes of CO2 permanently stored underground since 1996, new report finds"

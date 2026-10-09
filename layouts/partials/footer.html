@@ -17,44 +17,8 @@
         <div class="footer-col">
             <div class="footer-head">Funding &amp; assurance</div>
             <p>Supported by a <a href="{{ $reg.meta.raeng }}" target="_blank" rel="noopener">Royal Academy of
-                    Engineering Senior Research Fellowship</a> held by Prof Samuel Krevor.<br>
-                Data quality independently assured by DNV.</p>
+                    Engineering Senior Research Fellowship</a> held by Prof Samuel Krevor.</p>
         </div>
     </div>
     <div class="footer-base">&copy; 2026 Imperial College London</div>
-    {{- with $reg.meta.goatcounter }}
-    <div class="footer-stats">
-        <div class="footer-stats-inner">
-            <div class="stat-chip">
-                <div class="stat-num" id="gc-total">&ndash;</div>
-                <div class="stat-label">Site visits</div>
-            </div>
-
-        </div>
-    </div>
-    <script>
-        (function () {
-            var code = {{ . | jsonify }};
-            var animate = function (el, target) {
-                var t0 = null, dur = 900;
-                var step = function (ts) {
-                    if (!t0) t0 = ts;
-                    var k = Math.min(1, (ts - t0) / dur);
-                    el.textContent = Math.round(target * (1 - Math.pow(1 - k, 3))).toLocaleString();
-                    if (k < 1) requestAnimationFrame(step);
-                };
-                requestAnimationFrame(step);
-            };
-            var load = function (path, elId) {
-                fetch('https://' + code + '.goatcounter.com/counter/' + path + '.json')
-                    .then(function (r) { return r.json(); })
-                    .then(function (d) {
-                        var n = parseInt(String(d.count).replace(/[^0-9]/g, ''), 10);
-                        if (!isNaN(n)) animate(document.getElementById(elId), n);
-                    }).catch(function () { });
-            };
-            try { load('TOTAL', 'gc-total'); } catch (e) { }
-        })();
-    </script>
-    {{- end }}
 </div>

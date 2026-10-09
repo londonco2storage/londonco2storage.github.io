@@ -315,8 +315,20 @@
         const years = [];
         for (let y = 1996; y <= 2025; y++) years.push(String(y));
         const lines = [["Country", "CO2 Storage Project", "Project Operator", "Storage Type", ...years]];
+        const selType = storageTypeFilter.value;
+        const selCountry = countryFilter.value;
+        const q = (projectSearch.value || '').trim().toLowerCase();
         Object.entries(data).forEach(([country, records]) => {
-            records.forEach(item => {
+            if (selCountry && country !== selCountry) return;
+            let rows = selType
+                ? records.filter(item => item.type === 'record' &&
+                    (item.storage_type || 'Not specified') === selType)
+                : records;
+            if (q) {
+                rows = rows.filter(item => item.type === 'record' &&
+                    (item.co2_storage_project || '').toLowerCase().includes(q));
+            }
+            rows.forEach(item => {
                 lines.push([
                     country === "TOTAL" ? "" : country,
                     item.co2_storage_project || "", item.storage_operator || "", item.storage_type || "",
