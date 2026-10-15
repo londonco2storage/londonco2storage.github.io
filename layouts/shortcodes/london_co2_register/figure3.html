@@ -1,11 +1,11 @@
 {{- $reg := site.Data.register }}
 <div class="ichart-panel">
     <div class="ichart-title">Figure 3 &mdash; Annual CO&#8322; storage by storage type</div>
-    <div class="ichart-sub">Geological Storage with Oil Recovery vs Dedicated Geological Storage (DS), 1996&ndash;2025
+    <div class="ichart-sub">Geological Storage with Oil Recovery vs Geological Storage, 1996&ndash;2025
         &middot; million tonnes per year &middot; data release {{ $reg.meta.release }}</div>
     <div id="figure3-tooltip" class="ichart-tooltip"></div>
     <svg id="figure3-svg" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" role="img"
-        aria-label="Annual CO2 storage by storage type, Geological Storage with Oil Recovery versus dedicated storage"></svg>
+        aria-label="Annual CO2 storage by storage type, Geological Storage with Oil Recovery versus Geological Storage"></svg>
     <div class="ichart-sub" style="margin-top:.35rem;">2025 reporting is incomplete; dashed segments and open markers show the available 2025 data.</div>
 </div>
 <script type="module">
@@ -30,7 +30,7 @@ g.append('text').attr('transform', 'rotate(-90)').attr('x', -ih / 2).attr('y', -
     .attr('font-size', 12.5).attr('fill', '#142f40').text('Recorded CO₂ storage (million tonnes)');
 const SER = [
     { key: 'eor', label: 'Geological Storage with Oil Recovery', color: '#C14A4A', sym: 'circle' },
-    { key: 'ds', label: 'Dedicated geological storage (DS)', color: '#2A5682', sym: 'square' }
+    { key: 'ds', label: 'Geological Storage', color: '#2A5682', sym: 'square' }
 ];
 SER.forEach(s => {
     const solid = f3Data.filter(d => d.year <= 2024);
@@ -52,7 +52,7 @@ SER.forEach(s => {
     const last = f3Data[f3Data.length - 1];
     const labelLines = s.key === 'eor'
         ? ['Geological Storage', 'with Oil Recovery']
-        : ['Dedicated Geological', 'Storage (DS)'];
+        : ['Geological Storage'];
     const lbl = g.append('text').attr('x', x(2025) + 16).attr('y', y(last[s.key]) + 4)
         .attr('font-size', 13).attr('fill', s.color).attr('font-weight', 600);
     labelLines.forEach((ln, li) => {
@@ -73,7 +73,7 @@ svg.append('rect').attr('x', M.l).attr('y', M.t).attr('width', iw).attr('height'
         tip.style('visibility', 'visible')
             .html(`<strong>${yr}</strong>${yr === 2025 ? ' (incomplete)' : ''}<br>` +
                 `<span style="color:#C14A4A">&#9679;</span> Geological Storage with Oil Recovery: ${f1(d.eor)} Mt &middot; ${d.eorN} project${d.eorN === 1 ? '' : 's'}<br>` +
-                `<span style="color:#2A5682">&#9632;</span> DS: ${f1(d.ds)} Mt &middot; ${d.dsN} project${d.dsN === 1 ? '' : 's'}`)
+                `<span style="color:#2A5682">&#9632;</span> Geological Storage: ${f1(d.ds)} Mt &middot; ${d.dsN} project${d.dsN === 1 ? '' : 's'}`)
             .style('top', (event.pageY - 12) + 'px').style('left', (event.pageX + 14) + 'px');
     })
     .on('mouseleave', () => { tip.style('visibility', 'hidden'); guide.style('visibility', 'hidden'); });
