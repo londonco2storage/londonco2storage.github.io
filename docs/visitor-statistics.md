@@ -10,8 +10,9 @@ can add a delay. Reload the page after the deployment to see the new snapshot.
 The page does not poll or update an already-open tab automatically.
 
 The refresh workflow uses the GoatCounter API (`https://www.goatcounter.com/api.json`),
-including pagination for both hits and locations. It validates both responses and
-replaces `data/livestats.json` atomically. Failed requests preserve the previous
+including pagination for both hits and locations. The locations request includes
+only page path IDs, excluding download and click-through events. It validates
+responses and replaces `data/livestats.json` atomically. Failed requests preserve the previous
 snapshot and its timestamp. Actions caches the last successful snapshot between
 runs; the committed JSON is the fallback if the cache is unavailable.
 
@@ -22,9 +23,26 @@ revoke/replace that old token because it has been committed to Git history.
 Never pass an API token into a template or client-side JavaScript.
 
 The first three counters include only the 2026 report edition (draft and final
-filenames); 2025 reports are excluded. The five counters sum the named events in `layouts/partials/visitor-stats.html`.
-They reflect GoatCounter's recorded visitor/event counts, not independently
-verified file transfers. A zero means no event was recorded in the snapshot.
+filenames); 2025 reports are excluded. The first five counters sum named events
+in `layouts/partials/visitor-stats.html`. Each new download or Zenodo click is sent
+with GoatCounter's `no_session` option, so repeated clicks are counted separately.
+`static/js/activity.js` queues clicks in memory while the tracker loads and owns
+event binding to avoid duplicate tracking. It respects the tracker's normal
+browser exclusions. Historical events used session deduplication; unrecorded
+repeat clicks cannot be reconstructed from the aggregate snapshot.
+These are recorded click counts, not independently verified file transfers.
+Tracking semantics: https://www.goatcounter.com/help/js and
+https://www.goatcounter.com/help/events.
+
+The sixth counter, Website visits, sums the recorded page visits across all page
+paths (paths starting with `/`); event names cannot start with `/`. It retains
+GoatCounter's default session deduplication per page, and is not a count of unique
+people across the whole website. It uses the same date window as the map.
+Taiwan location rows are aggregated into China for this site's reporting. The
+China SVG feature includes the Taiwan geometry, with one shared count and hover
+title; aliases also handle older snapshots with separate Taiwan rows.
+
+A zero means no activity was recorded for that counter in the snapshot.
 An unavailable snapshot displays a dash, not zero. Download event names must stay
 in sync with the download links and table CSV handler.
 
@@ -41,9 +59,10 @@ Checks:
 
 ```sh
 python3 -m unittest discover -s tests -v  # Python 3.11+
+node --test tests/test_activity.js
 hugo --minify
 ```
 
 Review the generated page with JavaScript disabled and third-party requests
-blocked, at desktop and mobile widths. `#visitor-map` should contain 176 paths;
+blocked, at desktop and mobile widths. `#visitor-map` should contain 175 paths;
 United Kingdom and Greece should show the counts in the current snapshot.

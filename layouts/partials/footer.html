@@ -9,7 +9,7 @@
         </div>
         <div class="footer-col">
             <div class="footer-head">Data &amp; citation</div>
-            <p><a href="{{ $reg.meta.zenodo }}" target="_blank" rel="noopener" data-goatcounter-click="goto-zenodo" data-goatcounter-title="Zenodo database">Database on Zenodo</a><br>
+            <p><a href="{{ $reg.meta.zenodo }}" target="_blank" rel="noopener" data-goatcounter-no-session="1" data-goatcounter-click="goto-zenodo" data-goatcounter-title="Zenodo database">Database on Zenodo</a><br>
                 {{ with $data }}<a href="{{ .RelPermalink }}">Reports &amp; downloads</a><br>{{ end }}
                 Data release {{ $reg.meta.release }} ({{ $reg.meta.updated }})</p>
             <p class="footer-cite">{{ $reg.meta.citation }}</p>

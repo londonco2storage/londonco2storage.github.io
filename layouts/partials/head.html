@@ -1,5 +1,8 @@
 <head>
     <meta charset="utf-8">
+    {{- with site.Data.register.meta.goatcounter }}
+    <script src="{{ relURL "js/activity.js" }}"></script>
+    {{- end }}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
         content="The London Register of Subsurface CO2 Storage: annually reported amounts of CO2 stored geologically by projects worldwide since 1996, with sources, methodology and downloadable database.">

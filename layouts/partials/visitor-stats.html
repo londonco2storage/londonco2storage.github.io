@@ -2,8 +2,12 @@
 {{- $available := and $ls $ls.generated (isset $ls "hits") (isset $ls "countries") -}}
 {{- $hits := newScratch -}}
 {{- $countries := newScratch -}}
+{{- $websiteVisits := 0 -}}
 {{- if $available -}}
-    {{- range $ls.hits -}}{{- $hits.Add .path (int .count) -}}{{- end -}}
+    {{- range $ls.hits -}}
+        {{- $hits.Add .path (int .count) -}}
+        {{- if hasPrefix .path "/" -}}{{- $websiteVisits = add $websiteVisits (int .count) -}}{{- end -}}
+    {{- end -}}
     {{- range $ls.countries -}}{{- $countries.Add .name (int .count) -}}{{- end -}}
 {{- end -}}
 {{- $chips := slice
@@ -11,7 +15,8 @@
     (dict "label" "2026 methodology downloads" "paths" (slice "download-London_Register_Methodology_2026_draft.pdf" "download-London_Register_Methodology_2026.pdf"))
     (dict "label" "2026 assurance report downloads" "paths" (slice "download-DNV_Data_Assurance_Summary_2026_draft.pdf" "download-DNV_Data_Assurance_Summary_2026.pdf"))
     (dict "label" "Stakeholders table downloads" "paths" (slice "download-table1-csv"))
-    (dict "label" "Zenodo click-throughs" "paths" (slice "goto-zenodo")) -}}
+    (dict "label" "Zenodo click-throughs" "paths" (slice "goto-zenodo"))
+    (dict "label" "Website visits" "total" $websiteVisits "description" "Recorded page visits, excluding download and link-click events.") -}}
 <section class="footer-stats" aria-labelledby="visitor-stats-heading">
     <div class="footer-stats-inner">
         <div class="footer-stats-summary">
@@ -25,10 +30,10 @@
             </p>
             <dl class="stats-grid">
                 {{- range $chips }}
-                {{- $sum := 0 -}}
+                {{- $sum := .total | default 0 -}}
                 {{- range .paths -}}{{- $sum = add $sum ($hits.Get . | default 0) -}}{{- end }}
                 <div class="stat-chip">
-                    <dt class="stat-label">{{ .label }}</dt>
+                    <dt class="stat-label"{{ with .description }} title="{{ . }}"{{ end }}>{{ .label }}</dt>
                     <dd class="stat-num">{{ if $available }}{{ lang.FormatNumber 0 $sum }}{{ else }}<span aria-label="Unavailable">&ndash;</span>{{ end }}</dd>
                 </div>
                 {{- end }}

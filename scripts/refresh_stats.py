@@ -38,7 +38,7 @@ def page_rows(payload, key):
     return payload[key], payload["more"]
 
 
-def collect(fetch, endpoint, key, name_key, params):
+def collect(fetch, endpoint, key, name_key, params, page_ids=None):
     totals = defaultdict(int)
     seen = set()
     excluded = []
@@ -59,7 +59,14 @@ def collect(fetch, endpoint, key, name_key, params):
                 raise ValueError("Missing or repeated pagination ID")
             seen.add(identifier)
             if endpoint == "hits":
+                if type(row.get("event")) is not bool:
+                    raise ValueError("Missing event classification")
                 excluded.append(identifier)
+                if page_ids is not None and not row["event"]:
+                    page_ids.append(identifier)
+            elif identifier == "TW" or name in ("Taiwan", "Taiwan, Province of China", "Taiwan (Province of China)", "Taiwan, China"):
+                # Site reporting convention: include these visits in China.
+                name = "China"
             totals[name] += row["count"]
         if not more:
             return [{name_key: name, "count": count} for name, count in
@@ -72,12 +79,17 @@ def refresh(output, fetch, now):
     # Use one date window for both requests. Never publish a partial snapshot.
     end = (now.date() + timedelta(days=1)).isoformat()
     params = {"start": START, "end": end}
+    page_ids = []
+    hits = collect(fetch, "hits", "hits", "path", params, page_ids)
+    # Restrict geography to page visits. Download/link events must not inflate it.
+    countries = collect(fetch, "locations", "stats", "name",
+                        dict(params, include_paths=",".join(map(str, page_ids)))) if page_ids else []
     snapshot = {
         "generated": now.strftime("%Y-%m-%d %H:%M UTC"),
         "start": START,
         "end": end,
-        "hits": collect(fetch, "hits", "hits", "path", params),
-        "countries": collect(fetch, "locations", "stats", "name", params),
+        "hits": hits,
+        "countries": countries,
     }
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -25,9 +25,10 @@ class RefreshStatsTests(unittest.TestCase):
             calls.append((endpoint, params))
             if endpoint == "hits":
                 if "exclude_paths" not in params:
-                    return {"hits": [{"path_id": 1, "path": "/", "count": 100}], "more": True}
+                    return {"hits": [{"path_id": 1, "path": "/", "event": False, "count": 100}], "more": True}
                 self.assertEqual(params["exclude_paths"], "1")
-                return {"hits": [{"path_id": 2, "path": "download-table1-csv", "count": 1}], "more": False}
+                return {"hits": [{"path_id": 2, "path": "download-table1-csv", "event": True, "count": 1}], "more": False}
+            self.assertEqual(params["include_paths"], "1")
             if params["offset"] == 0:
                 return {"stats": [{"id": "GB", "name": "United Kingdom", "count": 10}], "more": True}
             self.assertEqual(params["offset"], 1)
@@ -42,7 +43,7 @@ class RefreshStatsTests(unittest.TestCase):
         def fetch(endpoint, params):
             if endpoint == "locations":
                 raise TimeoutError()
-            return {"hits": [], "more": False}
+            return {"hits": [{"path_id": 1, "path": "/", "event": False, "count": 1}], "more": False}
         with self.assertRaises(TimeoutError):
             stats.refresh(self.output, fetch, self.now)
         self.assertEqual(self.output.read_text(), self.previous)
@@ -56,9 +57,35 @@ class RefreshStatsTests(unittest.TestCase):
                 self.assertEqual(self.output.read_text(), self.previous)
 
     def test_repeated_page_does_not_loop_or_double_count(self):
-        page = {"hits": [{"path_id": 1, "path": "/", "count": 1}], "more": True}
+        page = {"hits": [{"path_id": 1, "path": "/", "event": False, "count": 1}], "more": True}
         with self.assertRaises(ValueError):
             stats.refresh(self.output, lambda *args: page, self.now)
+        self.assertEqual(self.output.read_text(), self.previous)
+
+    def test_china_includes_taiwan_once_and_map_excludes_events(self):
+        def fetch(endpoint, params):
+            if endpoint == "hits":
+                return {"hits": [
+                    {"path_id": 1, "path": "/", "event": False, "count": 10},
+                    {"path_id": 2, "path": "download-table1-csv", "event": True, "count": 40},
+                    {"path_id": 3, "path": "/data", "event": False, "count": 4}], "more": False}
+            self.assertEqual(params["include_paths"], "1,3")
+            return {"stats": [
+                {"id": "CN", "name": "China", "count": 10},
+                {"id": "TW", "name": "Taiwan", "count": 4}], "more": False}
+        result = stats.refresh(self.output, fetch, self.now)
+        self.assertEqual(result["countries"], [{"name": "China", "count": 14}])
+        self.assertEqual(next(r["count"] for r in result["hits"] if r["path"] == "download-table1-csv"), 40)
+
+    def test_events_only_do_not_become_map_visits(self):
+        def fetch(endpoint, params):
+            self.assertEqual(endpoint, "hits")
+            return {"hits": [{"path_id": 2, "path": "download-table1-csv", "event": True, "count": 4}], "more": False}
+        self.assertEqual(stats.refresh(self.output, fetch, self.now)["countries"], [])
+
+    def test_missing_event_classification_preserves_snapshot(self):
+        with self.assertRaises(ValueError):
+            stats.refresh(self.output, lambda *args: {"hits": [{"path_id": 1, "path": "/", "count": 1}], "more": False}, self.now)
         self.assertEqual(self.output.read_text(), self.previous)
 
     def test_valid_empty_data_is_zero_not_failure(self):
