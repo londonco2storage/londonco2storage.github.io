@@ -1,6 +1,7 @@
 # Footer statistics
 
-Hugo renders the counters, country list and SVG paths into every page. The footer
+Hugo renders the counters and SVG paths into every page. Country counts appear
+in map hover titles; no country-name/count list is displayed. The footer
 requires no JavaScript or external requests to display. Tracking new activity
 still requires GoatCounter to be reachable and allowed by the visitor's browser.
 The footer displays the snapshot date. GitHub Actions schedules a refresh every
@@ -31,7 +32,7 @@ The country geometry in `data/visitor_map.json` was projected once from
 world-atlas 2.0.2 countries-110m using D3 7.9.0 Natural Earth 1 and topojson-client
 3.1.0, excluding Antarctica. Coordinates use a 640 × 320 viewBox and two decimal
 places. Geography is bundled with the site; no map/CDN request runs in the browser.
-Tiny countries may not exist at this scale; the country list retains all records.
+Tiny countries may not exist at this scale; the aggregate snapshot retains all records.
 Geometry source: https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json
 Natural Earth source data: https://www.naturalearthdata.com/about/terms-of-use/
 See `world-atlas-LICENSE.txt` for the redistribution license.
