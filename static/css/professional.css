@@ -659,9 +659,6 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .visits-low { fill: #75b6b4; background: #75b6b4; }
 .visits-medium { fill: #3fc4b7; background: #3fc4b7; }
 .visits-high { fill: #abe6c2; background: #abe6c2; }
-.map-legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; color: #b6c9d3; font-size: .7rem; margin: .6rem 0; }
-.map-legend span { display: inline-flex; gap: .35rem; align-items: center; }
-.map-legend i { display: inline-block; width: .75rem; height: .75rem; border: 1px solid #7c919e; }
 @media (max-width: 900px) {
   .footer-stats-inner { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1rem; }
   .stat-map { max-width: 640px; width: 100%; }

@@ -49,12 +49,6 @@
                 <path d="{{ .path }}" class="visitor-country visits-{{ $level }}" data-country="{{ .name }}" data-count="{{ $count }}"><title>{{ .name }}: {{ if $available }}{{ $count }} recorded visits{{ else }}statistics unavailable{{ end }}</title></path>
                 {{- end }}
             </svg>
-            <div class="map-legend" aria-label="Recorded visits legend">
-                <span><i class="visits-none"></i>0</span>
-                <span><i class="visits-low"></i>1–9</span>
-                <span><i class="visits-medium"></i>10–99</span>
-                <span><i class="visits-high"></i>100+</span>
-            </div>
             {{- if not (and $available $ls.countries) }}
             <p class="stats-note">{{ if $available }}No country visits recorded in this period.{{ else }}Country statistics are not available yet.{{ end }}</p>
             {{- end }}
