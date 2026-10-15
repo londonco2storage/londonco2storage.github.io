@@ -26,6 +26,17 @@ social = [
 ]
 
 [[member]]
+name = "Maksim Elizarev"
+avatar = "team-Max.png"
+role = "Quality control for data input"
+position = [
+    "Research Associate, Imperial College London",
+]
+social = [
+    { id = "website", icon = "globe", icon_pack = "fa", link = "https://profiles.imperial.ac.uk/m.elizarev" },
+]
+
+[[member]]
 name = "Dr Anjanette Harry"
 avatar = "team-harry.jpg"
 role = "Project Manager"
