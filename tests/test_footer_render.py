@@ -70,13 +70,16 @@ class FooterRenderTests(unittest.TestCase):
             ("download-DNV_Data_Assurance_Summary_2026.pdf", 4),
             ("download-table1-csv", 19),
             ("goto-zenodo", 23),
+            ("/", 10),
+            ("/data", 20),
+            ("/index.html", 2),
         ]
         parser, html = self.render({"generated": "2026-10-15 14:22 UTC", "hits": [
             {"path": path, "count": count} for path, count in fixtures], "countries": [
                 {"name": "United Kingdom", "count": 10}, {"name": "Greece", "count": 1}]})
-        self.assertEqual(parser.numbers, ["5", "11", "17", "19", "23"])
+        self.assertEqual(parser.numbers, ["5", "11", "17", "19", "23", "32"])
         self.assertTrue(all(label.startswith("2026 ") for label in parser.labels[:3]))
-        self.assertEqual(len(parser.countries), 176)
+        self.assertEqual(len(parser.countries), 175)
         self.assertEqual(parser.countries["United Kingdom"]["data-count"], "10")
         self.assertEqual(parser.countries["Greece"]["data-count"], "1")
         self.assertIn("visits-medium", parser.countries["United Kingdom"]["class"])
@@ -84,16 +87,27 @@ class FooterRenderTests(unittest.TestCase):
         self.assertNotIn("<script", html)
         self.assertNotIn("ZgotmplZ", html)
 
+    def test_china_geometry_and_count_include_taiwan_in_legacy_snapshots(self):
+        parser, html = self.render({"generated": "2026-10-15 14:22 UTC", "hits": [], "countries": [
+            {"name": "China", "count": 7}, {"name": "Taiwan", "count": 5}]})
+        self.assertEqual(parser.countries["China"]["data-count"], "12")
+        self.assertIn("visits-medium", parser.countries["China"]["class"])
+        self.assertNotIn("Taiwan", parser.countries)
+        self.assertIn("China: 12 recorded visits", html)
+        self.assertNotIn("Taiwan:", html)
+        self.assertNotIn("map-legend", html)
+        self.assertNotIn("visitor-countries", html)
+
     def test_2025_downloads_do_not_increment_2026_counters(self):
         parser, _ = self.render({"generated": "2026-10-15 14:22 UTC", "hits": [
             {"path": "download-London_Register_Annual_Report_2025.pdf", "count": 123},
             {"path": "download-DNV_Data_Quality_Assurance_2025.pdf", "count": 456}], "countries": []})
-        self.assertEqual(parser.numbers, ["0"] * 5)
+        self.assertEqual(parser.numbers, ["0"] * 6)
 
     def test_unavailable_and_empty_snapshots_are_distinct(self):
         parser, html = self.render(None)
-        self.assertEqual(parser.numbers, ["–"] * 5)
+        self.assertEqual(parser.numbers, ["–"] * 6)
         self.assertIn("Statistics are not available yet", html)
         parser, html = self.render({"generated": "2026-10-15 14:22 UTC", "hits": [], "countries": []})
-        self.assertEqual(parser.numbers, ["0"] * 5)
+        self.assertEqual(parser.numbers, ["0"] * 6)
         self.assertIn("No country visits recorded", html)

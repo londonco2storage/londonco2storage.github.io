@@ -59,13 +59,15 @@ jobs:
         with:
           python-version: '3.12'
       - name: Check statistics refresh logic
-        run: python -m unittest discover -s tests -v
+        run: |
+          python -m unittest discover -s tests -v
+          node --test tests/test_activity.js
       - name: Restore last valid statistics snapshot
         uses: actions/cache/restore@v4
         with:
           path: data/livestats.json
-          key: visitor-stats-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: visitor-stats-
+          key: visitor-stats-v2-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: visitor-stats-v2-
       - name: Bake visitor statistics
         id: stats
         env:
@@ -76,7 +78,7 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: data/livestats.json
-          key: visitor-stats-${{ github.run_id }}-${{ github.run_attempt }}
+          key: visitor-stats-v2-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache

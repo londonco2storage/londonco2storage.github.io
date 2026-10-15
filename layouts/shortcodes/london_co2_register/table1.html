@@ -20,7 +20,7 @@
                 <label>Search
                     <input type="search" id="project-search" placeholder="Project name&hellip;" aria-label="Search projects by name">
                 </label>
-                <button type="button" id="table-csv-download" class="table-csv-btn">Download CSV</button>
+                <button type="button" id="table-csv-download" class="table-csv-btn" data-goatcounter-click="download-table1-csv" data-goatcounter-title="Table 1 CSV download" data-goatcounter-no-session="1">Download CSV</button>
             </div>
         </header>
 
@@ -312,9 +312,6 @@
         return val;
     };
     document.getElementById('table-csv-download').addEventListener('click', () => {
-        if (window.goatcounter && window.goatcounter.count) {
-            window.goatcounter.count({ path: 'download-table1-csv', title: 'Table 1 CSV download', event: true });
-        }
         const years = [];
         for (let y = 1996; y <= 2025; y++) years.push(String(y));
         const lines = [["Country", "CO2 Storage Project", "Project Operator", "Storage Type", ...years]];
