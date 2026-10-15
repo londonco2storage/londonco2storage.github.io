@@ -4,7 +4,7 @@
     <h2 class="downloads-heading">Reports</h2>
 
     <div class="downloads-row">
-        {{- range $year := slice "2025" "2026" }}
+        {{- range $year := slice "2026" "2025" }}
         <div class="downloads-group">
             <h3 class="downloads-year">{{ $year }} edition</h3>
             {{- $docs := where $reg.doc "year" $year }}
