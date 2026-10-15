@@ -21,99 +21,68 @@
         </div>
     </div>
     <div class="footer-base">&copy; 2026 Imperial College London</div>
-    {{- with $reg.meta.goatcounter }}
+    {{- $ls := site.Data.livestats }}
     <div class="footer-stats">
         <div class="footer-stats-inner">
-            <div class="stat-chip"><div class="stat-num" id="st-ar">&ndash;</div><div class="stat-label">Annual report downloads</div></div>
-            <div class="stat-chip"><div class="stat-num" id="st-meth">&ndash;</div><div class="stat-label">Methodology downloads</div></div>
-            <div class="stat-chip"><div class="stat-num" id="st-dnv">&ndash;</div><div class="stat-label">Assurance report downloads</div></div>
-            <div class="stat-chip"><div class="stat-num" id="st-csv">&ndash;</div><div class="stat-label">Stakeholders Table Downloads</div></div>
-            <div class="stat-chip"><div class="stat-num" id="st-zen">&ndash;</div><div class="stat-label">Zenodo click-throughs</div></div>
-            {{- with site.Data.register.meta.goatcounter_token }}
-            <div class="stat-chip stat-map">
+            {{- $hits := dict }}
+            {{- with $ls }}{{ range .hits }}{{ $hits = merge $hits (dict .path (add (index $hits .path | default 0) (int .count))) }}{{ end }}{{ end }}
+            {{- $chips := slice
+                (dict "label" "Annual report downloads" "paths" (slice "download-London_Register_Annual_Report_2025.pdf" "download-London_Register_Annual_Report_2026_draft.pdf"))
+                (dict "label" "Methodology downloads" "paths" (slice "download-London_Register_Methodology_2026_draft.pdf"))
+                (dict "label" "Assurance report downloads" "paths" (slice "download-DNV_Data_Quality_Assurance_2025.pdf" "download-DNV_Data_Assurance_Summary_2026_draft.pdf"))
+                (dict "label" "Stakeholders Table Downloads" "paths" (slice "download-table1-csv"))
+                (dict "label" "Zenodo click-throughs" "paths" (slice "goto-zenodo")) }}
+            {{- range $chips }}
+            <div class="stat-chip">
+                <div class="stat-num">{{ if $ls }}{{ $sum := 0 }}{{ range .paths }}{{ $sum = add $sum (index $hits . | default 0) }}{{ end }}{{ $sum }}{{ else }}&ndash;{{ end }}</div>
+                <div class="stat-label">{{ .label }}</div>
+            </div>
+            {{- end }}
+            {{- if and $ls $ls.countries }}
+            <div class="stat-chip stat-map"{{ with $ls.generated }} title="Updated {{ . }}"{{ end }}>
                 <svg id="visitor-map" viewBox="0 0 280 136" width="280" height="136" role="img"
                     aria-label="Map of visitor countries"></svg>
                 <div class="stat-label">Visitors by country</div>
             </div>
-            <script type="module">
-                try {
-                    const token = {{ . | jsonify }};
-                    const code = {{ site.Data.register.meta.goatcounter | jsonify }};
-                    const { feature } = await import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm');
-                    const end = new Date().toISOString().slice(0, 10);
-                    const [world, stats] = await Promise.all([
-                        fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r => r.json()),
-                        fetch(`https://${code}.goatcounter.com/api/v0/stats/locations?start=2025-01-01&end=${end}`, {
-                            headers: { Authorization: 'Bearer ' + token }
-                        }).then(r => r.json())
-                    ]);
-                    const rows = (stats && (stats.stats || stats.stat || stats.locations)) || [];
-                    const ALIAS = {
-                        'United States': 'United States of America',
-                        'Czech Republic': 'Czechia',
-                        'Bosnia & Herzegovina': 'Bosnia and Herz.',
-                        'Dominican Republic': 'Dominican Rep.',
-                        'Central African Republic': 'Central African Rep.',
-                        'South Sudan': 'S. Sudan',
-                        'Democratic Republic of the Congo': 'Dem. Rep. Congo',
-                        'Congo': 'Congo',
-                        'Hong Kong': 'China',
-                        'Macao': 'China',
-                        'Singapore': 'Singapore'
-                    };
-                    const counts = new Map();
-                    rows.forEach(r => {
-                        const name = ALIAS[r.name] || r.name;
-                        counts.set(name, (counts.get(name) || 0) + (r.count || 0));
-                    });
-                    const land = feature(world, world.objects.countries);
-                    const proj = d3.geoNaturalEarth1();
-                    const path = d3.geoPath(proj.fitSize([280, 136], land));
-                    const max = Math.max(1, ...counts.values());
-                    const shade = d3.scaleSqrt().domain([1, max]).range(['#2e6f74', '#5fd0c4']);
-                    const svg = d3.select('#visitor-map');
-                    svg.selectAll('path').data(land.features).join('path')
-                        .attr('d', path)
-                        .attr('fill', d => counts.has(d.properties.name) ? shade(counts.get(d.properties.name)) : '#24455c')
-                        .attr('stroke', '#142f40').attr('stroke-width', 0.4)
-                        .append('title')
-                        .text(d => counts.has(d.properties.name)
-                            ? `${d.properties.name} — ${counts.get(d.properties.name).toLocaleString()} visits`
-                            : d.properties.name);
-                } catch (e) { /* map stays empty on failure */ }
-            </script>
             {{- end }}
         </div>
     </div>
-    <script>
-        (function () {
-            var code = {{ . | jsonify }};
-            var token = {{ site.Data.register.meta.goatcounter_token | jsonify }};
-            var groups = {
-                'st-ar': ['download-London_Register_Annual_Report_2025.pdf', 'download-London_Register_Annual_Report_2026_draft.pdf'],
-                'st-meth': ['download-London_Register_Methodology_2026_draft.pdf'],
-                'st-dnv': ['download-DNV_Data_Quality_Assurance_2025.pdf', 'download-DNV_Data_Assurance_Summary_2026_draft.pdf'],
-                'st-csv': ['download-table1-csv'],
-                'st-zen': ['goto-zenodo']
+    {{- if and $ls $ls.countries }}
+    <script type="module">
+        try {
+            const ROWS = {{ $ls.countries | jsonify }};
+            const { feature } = await import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm');
+            const world = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r => r.json());
+            const ALIAS = {
+                'United States': 'United States of America',
+                'Czech Republic': 'Czechia',
+                'Bosnia & Herzegovina': 'Bosnia and Herz.',
+                'Dominican Republic': 'Dominican Rep.',
+                'Central African Republic': 'Central African Rep.',
+                'South Sudan': 'S. Sudan',
+                'Democratic Republic of the Congo': 'Dem. Rep. Congo',
+                'Hong Kong': 'China',
+                'Macao': 'China'
             };
-            if (!token) return;
-            var end = new Date().toISOString().slice(0, 10);
-            fetch('https://' + code + '.goatcounter.com/api/v0/stats/hits?start=2025-01-01&end=' + end + '&limit=100', {
-                headers: { Authorization: 'Bearer ' + token }
-            })
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    var counts = {};
-                    (d.hits || []).forEach(function (h) {
-                        counts[h.path] = (counts[h.path] || 0) + (h.count || 0);
-                    });
-                    Object.keys(groups).forEach(function (id) {
-                        var total = groups[id].reduce(function (acc, p) { return acc + (counts[p] || 0); }, 0);
-                        document.getElementById(id).textContent = total.toLocaleString();
-                    });
-                })
-                .catch(function () { /* leave dashes when unreachable */ });
-        })();
+            const counts = new Map();
+            ROWS.forEach(r => {
+                const name = ALIAS[r.name] || r.name;
+                counts.set(name, (counts.get(name) || 0) + (r.count || 0));
+            });
+            const land = feature(world, world.objects.countries);
+            const proj = d3.geoNaturalEarth1();
+            const path = d3.geoPath(proj.fitSize([280, 136], land));
+            const max = Math.max(1, ...counts.values());
+            const shade = d3.scaleSqrt().domain([1, max]).range(['#2e6f74', '#5fd0c4']);
+            d3.select('#visitor-map').selectAll('path').data(land.features).join('path')
+                .attr('d', path)
+                .attr('fill', d => counts.has(d.properties.name) ? shade(counts.get(d.properties.name)) : '#24455c')
+                .attr('stroke', '#142f40').attr('stroke-width', 0.4)
+                .append('title')
+                .text(d => counts.has(d.properties.name)
+                    ? `${d.properties.name} — ${counts.get(d.properties.name).toLocaleString()} visits`
+                    : d.properties.name);
+        } catch (e) { /* static page remains fine without the map */ }
     </script>
     {{- end }}
 </div>
