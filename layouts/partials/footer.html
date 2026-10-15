@@ -88,6 +88,7 @@
     <script>
         (function () {
             var code = {{ . | jsonify }};
+            var token = {{ site.Data.register.meta.goatcounter_token | jsonify }};
             var groups = {
                 'st-ar': ['download-London_Register_Annual_Report_2025.pdf', 'download-London_Register_Annual_Report_2026_draft.pdf'],
                 'st-meth': ['download-London_Register_Methodology_2026_draft.pdf'],
@@ -95,22 +96,23 @@
                 'st-csv': ['download-table1-csv'],
                 'st-zen': ['goto-zenodo']
             };
-            Object.keys(groups).forEach(function (id) {
-                var paths = groups[id], total = 0, pending = paths.length, seen = false;
-                paths.forEach(function (p) {
-                    fetch('https://' + code + '.goatcounter.com/counter/' + encodeURIComponent(p) + '.json')
-                        .then(function (r) { return r.json(); })
-                        .then(function (d) {
-                            var n = parseInt(String(d.count).replace(/[^0-9]/g, ''), 10);
-                            if (!isNaN(n)) { total += n; seen = true; }
-                        })
-                        .catch(function () { })
-                        .finally(function () {
-                            pending -= 1;
-                            if (!pending && seen) document.getElementById(id).textContent = total.toLocaleString();
-                        });
-                });
-            });
+            if (!token) return;
+            var end = new Date().toISOString().slice(0, 10);
+            fetch('https://' + code + '.goatcounter.com/api/v0/stats/hits?start=2025-01-01&end=' + end + '&limit=100', {
+                headers: { Authorization: 'Bearer ' + token }
+            })
+                .then(function (r) { return r.json(); })
+                .then(function (d) {
+                    var counts = {};
+                    (d.hits || []).forEach(function (h) {
+                        counts[h.path] = (counts[h.path] || 0) + (h.count || 0);
+                    });
+                    Object.keys(groups).forEach(function (id) {
+                        var total = groups[id].reduce(function (acc, p) { return acc + (counts[p] || 0); }, 0);
+                        document.getElementById(id).textContent = total.toLocaleString();
+                    });
+                })
+                .catch(function () { /* leave dashes when unreachable */ });
         })();
     </script>
     {{- end }}
