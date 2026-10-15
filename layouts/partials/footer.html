@@ -47,7 +47,7 @@
                             headers: { Authorization: 'Bearer ' + token }
                         }).then(r => r.json())
                     ]);
-                    const rows = (stats && (stats.stat || stats.locations)) || [];
+                    const rows = (stats && (stats.stats || stats.stat || stats.locations)) || [];
                     const ALIAS = {
                         'United States': 'United States of America',
                         'Czech Republic': 'Czechia',
