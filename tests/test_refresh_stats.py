@@ -37,7 +37,7 @@ class RefreshStatsTests(unittest.TestCase):
         self.assertEqual(result["hits"][-1]["count"], 1)
         self.assertEqual(result["countries"], [{"name": "United Kingdom", "count": 10}, {"name": "Greece", "count": 1}])
         self.assertEqual(json.loads(self.output.read_text()), result)
-        self.assertTrue(all(p["start"] == "2025-01-01" and p["end"] == "2026-10-16" for _, p in calls))
+        self.assertTrue(all(p["start"] == "2026-10-15" and p["end"] == "2026-10-16" for _, p in calls))
 
     def test_second_endpoint_failure_preserves_entire_previous_snapshot(self):
         def fetch(endpoint, params):
