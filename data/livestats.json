@@ -1,43 +1,45 @@
 {
- "generated": "2026-10-15 14:22 UTC",
- "hits": [
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage",
-   "count": 4
-  },
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage/project",
-   "count": 2
-  },
-  {
-   "path": "download-table1-csv",
-   "count": 1
-  },
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage/index.html",
-   "count": 1
-  },
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage/visualisation",
-   "count": 1
-  },
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage/news",
-   "count": 1
-  },
-  {
-   "path": "/The-London-Register-of-Subsurface-CO2-Storage/data",
-   "count": 1
-  }
- ],
- "countries": [
-  {
-   "name": "United Kingdom",
-   "count": 10
-  },
-  {
-   "name": "Greece",
-   "count": 1
-  }
- ]
+  "generated": "2026-10-15 14:45 UTC",
+  "start": "2025-01-01",
+  "end": "2026-10-16",
+  "hits": [
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage",
+      "count": 4
+    },
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage/project",
+      "count": 2
+    },
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage/data",
+      "count": 1
+    },
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage/index.html",
+      "count": 1
+    },
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage/news",
+      "count": 1
+    },
+    {
+      "path": "/The-London-Register-of-Subsurface-CO2-Storage/visualisation",
+      "count": 1
+    },
+    {
+      "path": "download-table1-csv",
+      "count": 1
+    }
+  ],
+  "countries": [
+    {
+      "name": "United Kingdom",
+      "count": 10
+    },
+    {
+      "name": "Greece",
+      "count": 1
+    }
+  ]
 }

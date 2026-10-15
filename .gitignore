@@ -22,3 +22,7 @@ hugo.linux
 
 *.DS_Store
 /source_data
+
+# Python verification caches
+__pycache__/
+*.py[cod]

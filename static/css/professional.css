@@ -478,7 +478,7 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 
 /* Footer columns */
 .base-footer { background: var(--wash); border-top: 1px solid var(--line); margin-top: 3rem; }
-.footer { text-align: left; font-size: .8rem; padding: 0; }
+.footer { background: var(--wash); text-align: left; font-size: .8rem; padding: 0; }
 .footer-grid {
   max-width: 1600px;
   margin-inline: auto;
@@ -549,37 +549,6 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .downloads-cards { display: flex; gap: 1rem; flex-wrap: wrap; }
 .downloads-cards .download-card { width: 205px; }
 
-/* Visitor statistics strip at the very bottom. */
-.footer-stats { background: var(--ink); }
-.footer-stats-inner {
-  max-width: 1600px;
-  margin-inline: auto;
-  padding: 1.2rem 2rem 1.3rem;
-  display: flex;
-  gap: 3.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.stat-chip { color: #fff; }
-.stat-chip a { color: #fff; text-decoration: none; display: block; }
-.stat-num {
-  font-size: 1.7rem;
-  font-weight: 700;
-  line-height: 1.1;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -.02em;
-}
-.stat-arrow { font-size: 1.5rem; }
-.stat-label {
-  margin-top: .15rem;
-  font-size: .66rem;
-  font-weight: 600;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: #9fb3bf;
-}
-.stat-link-chip:hover .stat-label { color: #fff; }
-
 /* Figure 1: legend beside the chart, stretched to exactly the chart's height. */
 .fig1-flex { flex-direction: row; align-items: stretch; }
 .fig-legend-col { flex: 0 0 560px; display: flex; flex-direction: column; min-width: 0; }
@@ -600,8 +569,6 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
 .list-item { font-size: .92rem; line-height: 1.55; }
 .list-item ~ hr { margin: .25rem 0; opacity: .12; }
 .list-item:hover { background-color: var(--wash); }
-.stat-map { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
-.stat-map-widget { width: 220px; min-height: 110px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.04); }
 
 /* News coverage list. */
 .news-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr)); gap: .9rem; margin-top: 1.2rem; }
@@ -652,7 +619,6 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   #legend { column-count: 1; }
   .downloads-cards .download-card { width: 160px; max-width: 46%; }
   .downloads-group + .downloads-group { border-left: 0; padding-left: 0; }
-  .footer-stats-inner { gap: 2rem; padding-inline: 1rem; }
   .register-table-head { padding: .7rem .8rem; }
   .register-table-toolbar { gap: .6rem; }
   .register-table-toolbar input[type="search"] { min-width: 120px; }
@@ -669,6 +635,42 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   text-align: center;
 }
 
-/* Visitor-map slot in the stats strip. */
-.stat-map { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
-.stat-map-widget { width: 240px; min-height: 120px; border-radius: 6px; overflow: hidden; background: rgba(255, 255, 255, .05); }
+/* Statistics and map are rendered by Hugo, with no browser-side dependencies. */
+.footer-stats { background: var(--ink); color: #edf5f7; }
+.footer-stats-inner {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 3rem;
+  align-items: start;
+}
+.footer-stats h2, .stat-map figcaption { color: #edf5f7; font-size: 1rem; font-weight: 700; margin: 0 0 .5rem; }
+.stats-updated, .stats-note { color: #b6c9d3; font-size: .75rem; line-height: 1.6; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.stat-chip { display: flex; flex-direction: column; gap: .4rem; min-width: 0; }
+.stat-label { color: #b6c9d3; font-size: .72rem; font-weight: 600; line-height: 1.5; }
+.stat-num { order: -1; color: #fff; font-size: 1.9rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; margin: 0; }
+.stat-map { min-width: 0; margin: 0; }
+#visitor-map { display: block; width: 100%; height: auto; max-width: 640px; margin-inline: auto; }
+.visitor-country { stroke: #142f40; stroke-width: .6; vector-effect: non-scaling-stroke; }
+.visits-none { fill: #365366; background: #365366; }
+.visits-low { fill: #75b6b4; background: #75b6b4; }
+.visits-medium { fill: #3fc4b7; background: #3fc4b7; }
+.visits-high { fill: #abe6c2; background: #abe6c2; }
+.map-legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; color: #b6c9d3; font-size: .7rem; margin: .6rem 0; }
+.map-legend span { display: inline-flex; gap: .35rem; align-items: center; }
+.map-legend i { display: inline-block; width: .75rem; height: .75rem; border: 1px solid #7c919e; }
+.visitor-countries { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3rem 1.5rem; max-height: 10rem; overflow-y: auto; font-size: .75rem; }
+.visitor-countries li { display: flex; justify-content: space-between; gap: .7rem; }
+.visitor-countries strong { font-variant-numeric: tabular-nums; }
+@media (max-width: 900px) {
+  .footer-stats-inner { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem 1rem; }
+  .stat-map { max-width: 640px; width: 100%; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
+  .visitor-countries { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: minmax(0, 1fr); padding-inline: 1rem; }
+}
