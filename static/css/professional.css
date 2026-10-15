@@ -668,3 +668,7 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   min-width: 300px;
   text-align: center;
 }
+
+/* Visitor-map slot in the stats strip. */
+.stat-map { margin-left: auto; display: flex; align-items: center; gap: 1rem; }
+.stat-map-widget { width: 240px; min-height: 120px; border-radius: 6px; overflow: hidden; background: rgba(255, 255, 255, .05); }
