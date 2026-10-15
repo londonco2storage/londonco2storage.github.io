@@ -38,7 +38,7 @@
             <figcaption id="visitor-map-caption">Global visitor map</figcaption>
             <svg id="visitor-map" viewBox="0 0 640 320" width="640" height="320" role="img" aria-labelledby="visitor-map-title visitor-map-desc">
                 <title id="visitor-map-title">Recorded visits by country</title>
-                <desc id="visitor-map-desc">Countries with recorded visits are shaded. Counts are listed below the map.</desc>
+                <desc id="visitor-map-desc">Countries are shaded by the number of recorded visits. Hover over a country to see its count.</desc>
                 {{- range site.Data.visitor_map.countries -}}
                     {{- $count := $countries.Get .name | default 0 -}}
                     {{- range .aliases -}}{{- $count = add $count ($countries.Get . | default 0) -}}{{- end -}}
@@ -55,13 +55,7 @@
                 <span><i class="visits-medium"></i>10–99</span>
                 <span><i class="visits-high"></i>100+</span>
             </div>
-            {{- if and $available $ls.countries }}
-            <ul class="visitor-countries" aria-label="Visits by country">
-                {{- range sort $ls.countries "count" "desc" }}
-                <li><span>{{ .name }}</span><strong>{{ lang.FormatNumber 0 .count }}</strong></li>
-                {{- end }}
-            </ul>
-            {{- else }}
+            {{- if not (and $available $ls.countries) }}
             <p class="stats-note">{{ if $available }}No country visits recorded in this period.{{ else }}Country statistics are not available yet.{{ end }}</p>
             {{- end }}
         </figure>
