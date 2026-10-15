@@ -54,23 +54,29 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check statistics refresh logic
+        run: python -m unittest discover -s tests -v
+      - name: Restore last valid statistics snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: data/livestats.json
+          key: visitor-stats-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: visitor-stats-
       - name: Bake visitor statistics
-        run: |
-          TOKEN=$(grep -o 'goatcounter_token = "[^"]*"' data/register.toml | cut -d'"' -f2)
-          CODE=$(grep -o '^goatcounter = "[^"]*"' data/register.toml | cut -d'"' -f2)
-          END=$(date -u -d '+1 day' +%F)
-          if [ -n "$TOKEN" ] && [ -n "$CODE" ]; then
-            curl -sf "https://$CODE.goatcounter.com/api/v0/stats/hits?start=2025-01-01&end=$END&limit=100" \
-              -H "Authorization: Bearer $TOKEN" -o /tmp/hits.json || echo '{}' > /tmp/hits.json
-            curl -sf "https://$CODE.goatcounter.com/api/v0/stats/locations?start=2025-01-01&end=$END" \
-              -H "Authorization: Bearer $TOKEN" -o /tmp/loc.json || echo '{}' > /tmp/loc.json
-            jq -n --slurpfile h /tmp/hits.json --slurpfile l /tmp/loc.json \
-              '{generated: (now | strftime("%Y-%m-%d %H:%M UTC")),
-                hits: [($h[0].hits // [])[] | {path, count}],
-                countries: [($l[0].stats // [])[] | {name, count}]}' \
-              > data/livestats.json || true
-          fi
-          head -c 400 data/livestats.json || true
+        id: stats
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: python scripts/refresh_stats.py
+      - name: Save valid statistics snapshot
+        if: steps.stats.outputs.updated == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: data/livestats.json
+          key: visitor-stats-${{ github.run_id }}-${{ github.run_attempt }}
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache

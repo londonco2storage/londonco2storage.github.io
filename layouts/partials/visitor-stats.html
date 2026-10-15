@@ -1,0 +1,69 @@
+{{- $ls := site.Data.livestats -}}
+{{- $available := and $ls $ls.generated (isset $ls "hits") (isset $ls "countries") -}}
+{{- $hits := newScratch -}}
+{{- $countries := newScratch -}}
+{{- if $available -}}
+    {{- range $ls.hits -}}{{- $hits.Add .path (int .count) -}}{{- end -}}
+    {{- range $ls.countries -}}{{- $countries.Add .name (int .count) -}}{{- end -}}
+{{- end -}}
+{{- $chips := slice
+    (dict "label" "2026 annual report downloads" "paths" (slice "download-London_Register_Annual_Report_2026_draft.pdf" "download-London_Register_Annual_Report_2026.pdf"))
+    (dict "label" "2026 methodology downloads" "paths" (slice "download-London_Register_Methodology_2026_draft.pdf" "download-London_Register_Methodology_2026.pdf"))
+    (dict "label" "2026 assurance report downloads" "paths" (slice "download-DNV_Data_Assurance_Summary_2026_draft.pdf" "download-DNV_Data_Assurance_Summary_2026.pdf"))
+    (dict "label" "Stakeholders table downloads" "paths" (slice "download-table1-csv"))
+    (dict "label" "Zenodo click-throughs" "paths" (slice "goto-zenodo")) -}}
+<section class="footer-stats" aria-labelledby="visitor-stats-heading">
+    <div class="footer-stats-inner">
+        <div class="footer-stats-summary">
+            <h2 id="visitor-stats-heading">Website activity</h2>
+            <p class="stats-updated">
+                {{- if $available -}}
+                    Recorded activity since {{ $ls.start | default "2025-01-01" }}. Updated {{ $ls.generated }}. Refreshes daily.
+                {{- else -}}
+                    Statistics are not available yet.
+                {{- end -}}
+            </p>
+            <dl class="stats-grid">
+                {{- range $chips }}
+                {{- $sum := 0 -}}
+                {{- range .paths -}}{{- $sum = add $sum ($hits.Get . | default 0) -}}{{- end }}
+                <div class="stat-chip">
+                    <dt class="stat-label">{{ .label }}</dt>
+                    <dd class="stat-num">{{ if $available }}{{ lang.FormatNumber 0 $sum }}{{ else }}<span aria-label="Unavailable">&ndash;</span>{{ end }}</dd>
+                </div>
+                {{- end }}
+            </dl>
+        </div>
+        <figure class="stat-map" aria-labelledby="visitor-map-caption">
+            <figcaption id="visitor-map-caption">Global visitor map</figcaption>
+            <svg id="visitor-map" viewBox="0 0 640 320" width="640" height="320" role="img" aria-labelledby="visitor-map-title visitor-map-desc">
+                <title id="visitor-map-title">Recorded visits by country</title>
+                <desc id="visitor-map-desc">Countries with recorded visits are shaded. Counts are listed below the map.</desc>
+                {{- range site.Data.visitor_map.countries -}}
+                    {{- $count := $countries.Get .name | default 0 -}}
+                    {{- range .aliases -}}{{- $count = add $count ($countries.Get . | default 0) -}}{{- end -}}
+                    {{- $level := "none" -}}
+                    {{- if ge $count 100 -}}{{- $level = "high" -}}
+                    {{- else if ge $count 10 -}}{{- $level = "medium" -}}
+                    {{- else if gt $count 0 -}}{{- $level = "low" -}}{{- end }}
+                <path d="{{ .path }}" class="visitor-country visits-{{ $level }}" data-country="{{ .name }}" data-count="{{ $count }}"><title>{{ .name }}: {{ if $available }}{{ $count }} recorded visits{{ else }}statistics unavailable{{ end }}</title></path>
+                {{- end }}
+            </svg>
+            <div class="map-legend" aria-label="Recorded visits legend">
+                <span><i class="visits-none"></i>0</span>
+                <span><i class="visits-low"></i>1–9</span>
+                <span><i class="visits-medium"></i>10–99</span>
+                <span><i class="visits-high"></i>100+</span>
+            </div>
+            {{- if and $available $ls.countries }}
+            <ul class="visitor-countries" aria-label="Visits by country">
+                {{- range sort $ls.countries "count" "desc" }}
+                <li><span>{{ .name }}</span><strong>{{ lang.FormatNumber 0 .count }}</strong></li>
+                {{- end }}
+            </ul>
+            {{- else }}
+            <p class="stats-note">{{ if $available }}No country visits recorded in this period.{{ else }}Country statistics are not available yet.{{ end }}</p>
+            {{- end }}
+        </figure>
+    </div>
+</section>
