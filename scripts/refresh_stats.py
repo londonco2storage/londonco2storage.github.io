@@ -12,7 +12,7 @@ import tomllib
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-START = "2025-01-01"
+START = "2026-10-15"
 
 
 def get_json(site, token, endpoint, params):
