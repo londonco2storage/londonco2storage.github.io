@@ -3,7 +3,10 @@
 Hugo renders the counters, country list and SVG paths into every page. The footer
 requires no JavaScript or external requests to display. Tracking new activity
 still requires GoatCounter to be reachable and allowed by the visitor's browser.
-The footer displays the snapshot date; these are daily snapshots, not live counts.
+The footer displays the snapshot date. GitHub Actions schedules a refresh every
+15 minutes, at minutes 7, 22, 37 and 52 of each hour (UTC). Scheduling and deployment
+can add a delay. Reload the page after the deployment to see the new snapshot.
+The page does not poll or update an already-open tab automatically.
 
 The refresh workflow uses the GoatCounter API (`https://www.goatcounter.com/api.json`),
 including pagination for both hits and locations. It validates both responses and
