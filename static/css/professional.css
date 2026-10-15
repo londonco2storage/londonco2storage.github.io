@@ -667,3 +667,11 @@ body { font-family: "Inter", "Avenir Next", Avenir, "Segoe UI", sans-serif; }
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; }
   .footer-grid { grid-template-columns: minmax(0, 1fr); padding-inline: 1rem; }
 }
+.footer-stats-note {
+  max-width: 1600px;
+  margin-inline: auto;
+  padding: 0 2rem 1rem;
+  font-size: .66rem;
+  letter-spacing: .06em;
+  color: #7b93a3;
+}
