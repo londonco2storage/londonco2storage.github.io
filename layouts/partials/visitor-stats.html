@@ -18,7 +18,7 @@
             <h2 id="visitor-stats-heading">Website activity</h2>
             <p class="stats-updated">
                 {{- if $available -}}
-                    Recorded activity since {{ $ls.start | default "2025-01-01" }}. Updated {{ $ls.generated }}. Refreshes daily.
+                    Recorded activity since {{ $ls.start | default "2025-01-01" }}. Updated {{ $ls.generated }}. Updates approximately every 15 minutes.
                 {{- else -}}
                     Statistics are not available yet.
                 {{- end -}}
