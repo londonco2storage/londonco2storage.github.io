@@ -9,7 +9,7 @@
         </div>
         <div class="footer-col">
             <div class="footer-head">Data &amp; citation</div>
-            <p><a href="{{ $reg.meta.zenodo }}" target="_blank" rel="noopener">Database on Zenodo</a><br>
+            <p><a href="{{ $reg.meta.zenodo }}" target="_blank" rel="noopener" data-goatcounter-click="goto-zenodo" data-goatcounter-title="Zenodo database">Database on Zenodo</a><br>
                 {{ with $data }}<a href="{{ .RelPermalink }}">Reports &amp; downloads</a><br>{{ end }}
                 Data release {{ $reg.meta.release }} ({{ $reg.meta.updated }})</p>
             <p class="footer-cite">{{ $reg.meta.citation }}</p>
@@ -20,29 +20,43 @@
                     Engineering Senior Research Fellowship</a> held by Prof Samuel Krevor.</p>
         </div>
     </div>
-    <div class="footer-base">&copy; 2026 Imperial College London
-        &middot; Report downloads: <span id="dl-count">&ndash;</span></div>
+    <div class="footer-base">&copy; 2026 Imperial College London</div>
     {{- with $reg.meta.goatcounter }}
-    {{- $paths := slice }}
-    {{- range $reg.doc }}{{ $paths = $paths | append (printf "download-%s" (path.Base .file)) }}{{ end }}
+    <div class="footer-stats">
+        <div class="footer-stats-inner">
+            <div class="stat-chip"><div class="stat-num" id="st-ar">&ndash;</div><div class="stat-label">Annual report downloads</div></div>
+            <div class="stat-chip"><div class="stat-num" id="st-meth">&ndash;</div><div class="stat-label">Methodology downloads</div></div>
+            <div class="stat-chip"><div class="stat-num" id="st-dnv">&ndash;</div><div class="stat-label">Assurance report downloads</div></div>
+            <div class="stat-chip"><div class="stat-num" id="st-csv">&ndash;</div><div class="stat-label">Table 1 CSV downloads</div></div>
+            <div class="stat-chip"><div class="stat-num" id="st-zen">&ndash;</div><div class="stat-label">Zenodo click-throughs</div></div>
+        </div>
+    </div>
     <script>
         (function () {
             var code = {{ . | jsonify }};
-            var paths = {{ $paths | jsonify }};
-            var total = 0, pending = paths.length;
-            if (!pending) return;
-            paths.forEach(function (p) {
-                fetch('https://' + code + '.goatcounter.com/counter/' + encodeURIComponent(p) + '.json')
-                    .then(function (r) { return r.json(); })
-                    .then(function (d) {
-                        var n = parseInt(String(d.count).replace(/[^0-9]/g, ''), 10);
-                        if (!isNaN(n)) total += n;
-                    })
-                    .catch(function () { })
-                    .finally(function () {
-                        pending -= 1;
-                        if (!pending) document.getElementById('dl-count').textContent = total.toLocaleString();
-                    });
+            var groups = {
+                'st-ar': ['download-London_Register_Annual_Report_2025.pdf', 'download-London_Register_Annual_Report_2026_draft.pdf'],
+                'st-meth': ['download-London_Register_Methodology_2026_draft.pdf'],
+                'st-dnv': ['download-DNV_Data_Quality_Assurance_2025.pdf', 'download-DNV_Data_Assurance_Summary_2026_draft.pdf'],
+                'st-csv': ['download-table1-csv'],
+                'st-zen': ['goto-zenodo']
+            };
+            Object.keys(groups).forEach(function (id) {
+                var paths = groups[id], total = 0, pending = paths.length, seen = false;
+                paths.forEach(function (p) {
+                    fetch('https://' + code + '.goatcounter.com/counter/' + encodeURIComponent(p) + '.json')
+                        .then(function (r) { return r.json(); })
+                        .then(function (d) {
+                            var n = parseInt(String(d.count).replace(/[^0-9]/g, ''), 10);
+                            if (!isNaN(n)) { total += n; seen = true; }
+                        })
+                        .catch(function () { })
+                        .finally(function () {
+                            pending -= 1;
+                            if (!pending && seen) document.getElementById(id).textContent = total.toLocaleString();
+                            if (!pending && !seen) document.getElementById(id).textContent = '0';
+                        });
+                });
             });
         })();
     </script>

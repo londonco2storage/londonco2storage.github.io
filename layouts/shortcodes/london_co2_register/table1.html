@@ -312,6 +312,9 @@
         return val;
     };
     document.getElementById('table-csv-download').addEventListener('click', () => {
+        if (window.goatcounter && window.goatcounter.count) {
+            window.goatcounter.count({ path: 'download-table1-csv', title: 'Table 1 CSV download', event: true });
+        }
         const years = [];
         for (let y = 1996; y <= 2025; y++) years.push(String(y));
         const lines = [["Country", "CO2 Storage Project", "Project Operator", "Storage Type", ...years]];
