@@ -29,6 +29,15 @@
             <div class="stat-chip"><div class="stat-num" id="st-dnv">&ndash;</div><div class="stat-label">Assurance report downloads</div></div>
             <div class="stat-chip"><div class="stat-num" id="st-csv">&ndash;</div><div class="stat-label">Table 1 CSV downloads</div></div>
             <div class="stat-chip"><div class="stat-num" id="st-zen">&ndash;</div><div class="stat-label">Zenodo click-throughs</div></div>
+            {{- with site.Data.register.meta.clustrmaps }}
+            <div class="stat-chip stat-map">
+                <div class="stat-map-widget">
+                    <script type="text/javascript" id="clstr_map"
+                        src="//clustrmaps.com/map_v2.js?d={{ . }}&cl=9fb3bf&w=240&t=n&co=142f40&cmo=56b6b1&cmn=c9a227&ct=ffffff"></script>
+                </div>
+                <div class="stat-label">Visitors by country</div>
+            </div>
+            {{- end }}
         </div>
     </div>
     <script>
@@ -54,7 +63,6 @@
                         .finally(function () {
                             pending -= 1;
                             if (!pending && seen) document.getElementById(id).textContent = total.toLocaleString();
-                            if (!pending && !seen) document.getElementById(id).textContent = '0';
                         });
                 });
             });
